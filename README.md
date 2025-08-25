@@ -1,4 +1,4 @@
-# Session ID - Session Title
+# DA263 - SAP HANA Cloud: Advisors and automation
 
 ## Description
 
