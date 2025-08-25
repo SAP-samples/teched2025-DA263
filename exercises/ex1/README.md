@@ -1,4 +1,4 @@
-# Exercise 1 - Exercise 1 Description
+# Exercise 1 - Elastic Compute Node Advisor and Automation Pilot
 
 In this exercise, we will create...
 
