@@ -2,7 +2,7 @@
 
 ## Description
 
-This repository contains the material for the SAP TechEd 2025 session called Session ID - Session Title.  
+This repository contains the material for the SAP TechEd 2025 session called DA263 - SAP HANA Cloud: Advisors and automation.  
 
 ## Overview
 
