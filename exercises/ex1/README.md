@@ -11,39 +11,45 @@ An ECN is an instance type running an additional computeserver process (like an 
 After completing these steps you will have successfully generated an ECN recommendation for your HANA Cloud instance from HANA Cloud Central.
 
 1. **Open SAP BTP Cockpit**
-  - Navigate to [SAP BTP Cockpit](https://tdct3ched1.accounts.ondemand.com/oauth2/authorize?response_type=code&scope=openid+email+profile&redirect_uri=https%3A%2F%2Femea.cockpit.btp.cloud.sap%2Flogin%2Fcallback&client_id=306ee77d-68d9-4398-ac62-1d07872563f9&state=EPkcyY---sTacmmvjflnPQ&code_challenge=fqM4tO2wlVaQLhRKfiqhS_2sXqA5WHfsG4QxvAc4oq4&code_challenge_method=S256).
-  - Login with your **_User Name_** and **_Password_**.
+- Navigate to [SAP BTP Cockpit](https://tdct3ched1.accounts.ondemand.com/oauth2/authorize?response_type=code&scope=openid+email+profile&redirect_uri=https%3A%2F%2Femea.cockpit.btp.cloud.sap%2Flogin%2Fcallback&client_id=306ee77d-68d9-4398-ac62-1d07872563f9&state=EPkcyY---sTacmmvjflnPQ&code_challenge=fqM4tO2wlVaQLhRKfiqhS_2sXqA5WHfsG4QxvAc4oq4&code_challenge_method=S256).
+- Login with your **_User Name_** and **_Password_**.
 
 2. **Access HANA Cloud Central**
- - Click **Instances and Subscriptions** on the leftmost navigation panel.
- - Click **SAP HANA Cloud** in the Application list to open HANA Cloud Central.
- <br>![](/exercises/ex1/images/01_00.png)  
- 
- - In HANA Cloud Central, you can see your HANA Cloud instance.
+- Click **Instances and Subscriptions** on the leftmost navigation panel.
+- Click **SAP HANA Cloud** in the Application list to open HANA Cloud Central.
+<br>![](/exercises/ex1/images/01_00.png)
+- In HANA Cloud Central, you can see your HANA Cloud instance.
  <br>![](/exercises/ex1/images/01_01.png)
 
+
 3. **Switch on ECN Advisor**
-  - When you click your HANA Cloud instance, you see **Overview** with many different tiles.
-  <br>![](/exercises/ex1/images/01_01_01.png)  
+- When you click your HANA Cloud instance, you see **Overview** with many different tiles.
+<br>![](/exercises/ex1/images/01_01_01.png)  
 
-  - Scroll down a bit and click **Elastic Compute Node** from **Recommendations** App.
-  <br>![](/exercises/ex1/images/01_02.png)  
 
-  - Click **Switch On**. You can see the resource usage over the past few days in the chart.
-  <br>![](/exercises/ex1/images/01_03.png)  
+- Scroll down a bit and click **Elastic Compute Node** from **Recommendations** App.
+<br>![](/exercises/ex1/images/01_02.png)  
 
-  - Add **Thresholds** for Memory and Compute. The default value is 80%, but in this exercise, we will set it as 70% for both.
-  <br> You can also enable ECN Advisor to automatically generate a recommendation in a weekly basis, but we do not turn it on in this exercise.
-  <br>![](/exercises/ex1/images/01_04.png)
-  <br> Now the ECN Advisor is switched on.  
 
-  - Click **Generate Recommendations**.
-  <br>![](/exercises/ex1/images/01_05.png)  
+- Click **Switch On**. You can see the resource usage over the past few days in the chart.
+<br>![](/exercises/ex1/images/01_03.png)  
 
-  - You can see a recommendation topic selected as Elastic Compute Node. Define the **Analysis Timeframe** that the advisor will analyze your resource usage to generate a recommendation. The timeframe can be **_from 30 minutes up to 14 days_**. The latest time you can analyze is 20 minutes before the current time. And then click **Generate Recommendation** at the bottom.
-  <br>![](/exercises/ex1/images/01_06.png)  
 
-  - 
+- Add **Thresholds** for Memory and Compute. The default value is 80%, but in this exercise, we will set it as 70% for both.
+<br> You can also enable ECN Advisor to automatically generate a recommendation in a weekly basis, but we do not turn it on in this exercise.
+<br>![](/exercises/ex1/images/01_04.png)
+<br> Now the ECN Advisor is switched on.  
+
+
+- Click **Generate Recommendations**.
+<br>![](/exercises/ex1/images/01_05.png)  
+
+
+- You can see a recommendation topic selected as Elastic Compute Node. Define the **Analysis Timeframe** that the advisor will analyze your resource usage to generate a recommendation. The timeframe can be **_from 30 minutes up to 14 days_**. The latest time you can analyze is 20 minutes before the current time. And then click **Generate Recommendation** at the bottom.
+<br>![](/exercises/ex1/images/01_06.png)  
+
+
+- 
 
 
 
