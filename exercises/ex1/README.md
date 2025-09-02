@@ -1,18 +1,25 @@
-# Exercise 1 - Elastic Compute Node Advisor and Automation Pilot
+# Exercise 1 - Elastic Compute Node Advisor and SAP Automation Pilot
 
-In this exercise, we will configure an Elastic Compute Node Advisor (ECN Advisor) and generate an ECN recommendation for a specific timeframe in Recommendation App from HANA Cloud Central. In addition, we will use an Automation Pilot to simplify and automate the provisioning and deprovisioning processes for ECNs.
+In this exercise, we will configure **Elastic Compute Node Advisor (ECN Advisor)** and generate an ECN recommendation for a specific timeframe in **Recommendation App** from **HANA Cloud Central**. In addition, we will use **SAP Automation Pilot** to simplify and automate the provisioning and deprovisioning processes for ECNs.
+
+## What is an Elastic Compute Node (ECN)?
+
 An ECN is an instance type running an additional computeserver process (like an indexserver) which has only a temporary persistence and which can be easily added and dropped when required depending on the current workload state. It is useful to handle the known peak loads.
 
-## Exercise 1.1 Sub Exercise 1 Description
+## Exercise 1.1 Configure ECN Advisor and generate an ECN recommendation
 
-After completing these steps you will have 
+After completing these steps you will have successfully generated an ECN recommendation for your HANA Cloud instance from HANA Cloud Central.
 
-1. Open SAP BTP Cockpit and login with your User Name and Password.
-Add link to BTP Cockpit
-And click Instances and Subscriptions and in the Subscriptions list, click SAP HANA Cloud application to open HANA Cloud Central.
-<br>![](/exercises/ex1/images/01_00.png)
+1. **Open SAP BTP Cockpit**
+  - Navigate to [SAP BTP Cockpit](https://tdct3ched1.accounts.ondemand.com/oauth2/authorize?response_type=code&scope=openid+email+profile&redirect_uri=https%3A%2F%2Femea.cockpit.btp.cloud.sap%2Flogin%2Fcallback&client_id=306ee77d-68d9-4398-ac62-1d07872563f9&state=EPkcyY---sTacmmvjflnPQ&code_challenge=fqM4tO2wlVaQLhRKfiqhS_2sXqA5WHfsG4QxvAc4oq4&code_challenge_method=S256)
+  - Login with your **_User Name_** and **_Password_**.
 
-Then in HANA Cloud Central, you can see your HANA Cloud instance.
+2. **Access HANA Cloud Central**
+ - Click **Instances and Subscriptions** on the leftmost navigation panel.
+ - Click **SAP HANA Cloud** in the Application list to open HANA Cloud Central.
+ <br>![](/exercises/ex1/images/01_00.png)
+ - In HANA Cloud Central, you can see your HANA Cloud instance.
+ <br>![](/exercises/ex1/images/01_01.png)
 
 2.	Insert this line of code.
 ```abap
