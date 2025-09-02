@@ -4,7 +4,7 @@ In this exercise, we will configure **Elastic Compute Node Advisor (ECN Advisor)
 
 ## What is an Elastic Compute Node (ECN)?
 
-An ECN is an instance type running an additional computeserver process (like an indexserver) which has only a temporary persistence and which can be easily added and dropped when required depending on the current workload state. It is useful to handle the known peak loads without upsizing your coordinator node permanently. You can find more information about the ECN [this guide](https://help.sap.com/docs/hana-cloud-database/sap-hana-cloud-sap-hana-database-administration-guide/sap-hana-cloud-elastic-compute-node?locale=en-US).
+An ECN is an instance type running an additional computeserver process (like an indexserver) which has only a temporary persistence and which can be easily added and dropped when required depending on the current workload state. It is useful to handle the known peak loads without upsizing your coordinator node permanently. You can find more information about the ECN in [this guide](https://help.sap.com/docs/hana-cloud-database/sap-hana-cloud-sap-hana-database-administration-guide/sap-hana-cloud-elastic-compute-node?locale=en-US).
 
 ## Exercise 1.1 Configure ECN Advisor and generate an ECN recommendation
 
@@ -17,25 +17,32 @@ After completing these steps you will have successfully generated an ECN recomme
 2. **Access HANA Cloud Central**
  - Click **Instances and Subscriptions** on the leftmost navigation panel.
  - Click **SAP HANA Cloud** in the Application list to open HANA Cloud Central.
- <br>![](/exercises/ex1/images/01_00.png)
+ <br>![](/exercises/ex1/images/01_00.png)  
+ 
  - In HANA Cloud Central, you can see your HANA Cloud instance.
  <br>![](/exercises/ex1/images/01_01.png)
 
 3. **Switch on ECN Advisor**
   - When you click your HANA Cloud instance, you see **Overview** with many different tiles.
-  <br>![](/exercises/ex1/images/01_01_01.png)
+  <br>![](/exercises/ex1/images/01_01_01.png)  
+
   - Scroll down a bit and click **Elastic Compute Node** from **Recommendations** App.
-  <br>![](/exercises/ex1/images/01_02.png)
+  <br>![](/exercises/ex1/images/01_02.png)  
+
   - Click **Switch On**. You can see the resource usage over the past few days in the chart.
-  <br>![](/exercises/ex1/images/01_03.png)
+  <br>![](/exercises/ex1/images/01_03.png)  
+
   - Add **Thresholds** for Memory and Compute. The default value is 80%, but in this exercise, we will set it as 70% for both.
   <br> You can also enable ECN Advisor to automatically generate a recommendation in a weekly basis, but we do not turn it on in this exercise.
   <br>![](/exercises/ex1/images/01_04.png)
-  <br> Now the ECN Advisor is switched on.
+  <br> Now the ECN Advisor is switched on.  
+
   - Click **Generate Recommendations**.
-  <br>![](/exercises/ex1/images/01_05.png)
+  <br>![](/exercises/ex1/images/01_05.png)  
+
   - You can see a recommendation topic selected as Elastic Compute Node. Define the **Analysis Timeframe** that the advisor will analyze your resource usage to generate a recommendation. The timeframe can be **_from 30 minutes up to 14 days_**. The latest time you can analyze is 20 minutes before the current time. And then click **Generate Recommendation** at the bottom.
-  <br>![](/exercises/ex1/images/01_06.png)
+  <br>![](/exercises/ex1/images/01_06.png)  
+
   - 
 
 
