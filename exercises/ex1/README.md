@@ -218,7 +218,7 @@ Add **cpu**, **memory**, **storage** as recommended, and add a **nodeName**. Mak
 
 ## Summary
 
-You've now learned how to configure ECN Advisor and generate an ECN recommendation for your workload. You've also learned to provision and deprovision the ECN in a simpler and more automated way with Automation Pilot.
+You've learned how to configure ECN Advisor to generate recommendations for your workload, and how to provision and deprovision ECNs more simply and automatically with Automation Pilot.
 
 You can find more assets about ECN and ECN Advisor below.
 - Blog: [Harnessing Dynamic Elasticity (Elastic Compute Node) for Smarter Scaling in SAP HANA Cloud](https://community.sap.com/t5/technology-blog-posts-by-sap/harnessing-dynamic-elasticity-elastic-compute-node-for-smarter-scaling-in/ba-p/14016836)
