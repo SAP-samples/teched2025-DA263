@@ -104,24 +104,123 @@ You can provision and deprovision the ECN and route the workload class to the EC
 - You can now see the imported ECN catalog in your catalog list.
 <br>![](/exercises/ex1/images/01_ap05.png)
 
-3. **Edit Inputs for the Catalog**
+
+3. **Edit Inputs of the Catalog**
 - Click **Inputs** in the catalog.
+<br>![](/exercises/ex1/images/01_ap19.png)
+
 - Click **HanaCloudOtherEnvironments**.
 <br>![](/exercises/ex1/images/01_ap07.png)
-- You can see the list of **Keys** in **Content** field. Edit the keys by clicking a Pencil icon.
-For the first key, you need to add **connectionUrl**.
+
+- You can see the list of **Keys** in **Content** field. Edit each key by clicking a Pencil icon.
 <br>![](/exercises/ex1/images/01_ap08.png)
-- Access **HANA Cloud Central** to **Copy SQL Endpoint** of your instance.
+
+- For the first key, you need to add **connectionUrl**. Access **HANA Cloud Central** to **Copy SQL Endpoint** of your instance.
 <br>![](/exercises/ex1/images/01_ap06.png)
 
+- Add the copied SQL Endpoint in the value after <u>jdbc:sap://</u> and save it.
+<br>![](/exercises/ex1/images/01_ap09.png)
+
+- Update **dbPassword** to your instance password.
+<br>![](/exercises/ex1/images/01_ap10.png)
+<br>![](/exercises/ex1/images/01_ap11.png)
+
+- Update **instanceID** to your instance ID. You can copy it from **HANA Cloud Central** again.
+<br>![](/exercises/ex1/images/01_ap12.png)
+<br>![](/exercises/ex1/images/01_ap13.png)
+<br>![](/exercises/ex1/images/01_ap14.png)
+
+- Update **serviceKey**. Copy JSON from **BTP Cockpit** and paste it as below.
+<br>![](/exercises/ex1/images/01_ap15.png)
+<br>![](/exercises/ex1/images/01_ap16.png)
+<br>![](/exercises/ex1/images/01_ap17.png)
+<br>![](/exercises/ex1/images/01_ap18.png)
+
+- Now you go back to **Inputs** list and click **HanaCloudServiceKey**.
+<br>![](/exercises/ex1/images/01_ap20.png)
+
+- Update **serviceKey** again by copying and pasting JSON from **BTP Cockpit**.
+<br>![](/exercises/ex1/images/01_ap21.png)
+<br>![](/exercises/ex1/images/01_ap22.png)
 
 
+4. **Provision ECN with Commands**
+- Click **Commands** from the catalog.
+<br>![](/exercises/ex1/images/01_ap23.png)
+
+- Click **ProvisionHanaCloudElasticComputeNode** from the list of commands.
+<br>![](/exercises/ex1/images/01_ap24.png)
+
+- Select **EnableWorkloadClass** in the **Executors** and edit the name of the workload class which needs to be routed to the ECN.
+<br>![](/exercises/ex1/images/01_ap25.png)
+To check the workload name again, go to **HANA Cloud Central** and under the **Elastic Compute Node** page, you can find **Manage Workload Classes** button. When you click it, you will see the list of **Workload Classes**.
+<br>![](/exercises/ex1/images/01_ap26.png)
+<br>![](/exercises/ex1/images/01_ap27.png)
+Come back to **Automation Pilot** and edit the statement to route the selected workload class to a new ECN that will be provisioned.
+<br>![](/exercises/ex1/images/01_ap28.png)
+You can also copy and paste the following statement.
+```sql
+ALTER WORKLOAD CLASS "WLC1" SET 'ROUTING LOCATION HINT'='ecn1';
+```
+
+- And now you are ready to **Trigger** the command. Click **Trigger** on the top right side.
+<br>![](/exercises/ex1/images/01_ap29.png)
+
+- Select **HanaCloudOtherEnvironments** for **Inputs**.
+<br>![](/exercises/ex1/images/01_ap30.png)
+
+- For the rest of the **Parameters**, you can take the recommended configuration that the advisor provided.
+Add **cpu**, **memory**, **storage** as recommended, and add a **nodeName**. Make sure you are using the same node name as you put in the **EnableWorkloadClass** executor earlier. And click **Trigger**.
+<br>![](/exercises/ex1/images/01_ap31.png)
+<br>![](/exercises/ex1/images/01_ap32.png)
+
+- Now the command is being executed and you can check the progress.
+<br>![](/exercises/ex1/images/01_ap33.png)
+
+- You will see **Finished** status when it's completed. It means the ECN is successfully provisioned and the selected workload class is set to be routed to the provisioned ECN.
+<br>![](/exercises/ex1/images/01_ap34.png)
+
+- To check, you can go to **HANA Cloud Central** and in **Elastic Compute Node** page, you see the <u>**ecn1**</u> created in the **Current Running ECNs** list. You can also click **1 workload classes** and see now the **WLC1** has a routing location set as **ecn1**.
+<br>![](/exercises/ex1/images/01_ap35.png)
+<br>![](/exercises/ex1/images/01_ap36.png)
+
+
+5. **Deprovision ECN with Commands**
+- Choose **DeprovisionHanaCloudElasticComputeNode** from the **Commands** list.
+<br>![](/exercises/ex1/images/01_ap37.png)
+
+- Edit *statement** parameter to update the workload class name from **DisableWorkloadClass** Executor. This executor will disable the workload class.
+<br>![](/exercises/ex1/images/01_ap38.png)
+<br>![](/exercises/ex1/images/01_ap39.png)
+
+- Trigger the command. Select **HanaCloudOtherEnvironments** for **Inputs** and add the ECN name, <u>**ecn1**</u> in the **nodeName** field. And click **Trigger**.
+<br>![](/exercises/ex1/images/01_ap40.png)
+
+- The **Automation Pilot** is disenabling the workload class and deprovisioning the ECN.
+<br>![](/exercises/ex1/images/01_ap41.png)
+
+- You can check the the execution is in progress from **HANA Cloud Central** as well.
+<br>![](/exercises/ex1/images/01_ap42.png)
+
+- Now the ECN is successfully deprovisioned.
+<br>![](/exercises/ex1/images/01_ap43.png)
+
+- In **HANA Cloud Central**, you can check there is no running ECN anymore.
+<br>![](/exercises/ex1/images/01_ap44.png)
+
+
+6. **Easily Repeat Commands with Automation Pilot**
+- To simplify repeating the provisioning and deprovisioning of ECN with the same configuration in a regular basis, you can go to **Executions** list and select the command that you have executed before and simply **Retrigger** the command.
+<br>![](/exercises/ex1/images/01_ap45.png)
+<br>![](/exercises/ex1/images/01_ap46.png)
 
 
 
 ## Summary
 
-You've now ...
+You've now learned how to configure ECN Advisor and generate an ECN recommendation for your workload. You've also learned to provision and deprovision the ECN in a simpler and more automated way with Automation Pilot.
 
-Continue to - [Exercise 2 - Exercise 2 Description](../ex2/README.md)
+You can find 
+
+Continue to - [Exercise 2 - Partition Advisor](../ex2/README.md)
 
