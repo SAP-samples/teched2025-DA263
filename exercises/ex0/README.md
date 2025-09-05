@@ -2,9 +2,9 @@
 
 This session covers configuring the Elastic Compute Node Advisor, Partition Advisor, and Index Advisor to generate database optimization recommendations, and explore multiple ways to apply those recommendations. 
 
-## Prerequisites for Exercise 1
+<ins>**For the hands-on workshop, all prerequisites listed below are already in place.**</ins> This information is for users who want to complete the exercise on their own outside the session.
 
-For the hands-on workshop, all prerequisites listed below are already in place. This information is for users who want to complete the exercise on their own outside the session.
+## Prerequisites for Exercise 1
 
 - An SAP BTP subaccount
 - An SAP HANA Cloud instance (non trial/free-tier instance)
