@@ -1,7 +1,8 @@
 # Exercise 2 - Partition Advisor
 
-In this exercise, we will use a **Partition Advisor** to generate partitioning recommendations for 5 different scnearios and apply those recommendations easily within **Recommendation App** from **HANA Cloud Central**.
+**Partition Advisor** generates intelligent recommendations for partitioning tables based on their size, usage patterns and data distribution.
 
+In this exercise, we will use this **Partition Advisor** to generate partitioning recommendations for 5 different scnearios and apply those recommendations easily within **Recommendation App** from **HANA Cloud Central**.
 
 ## Exercise 2.1 Generate partitioning recommendations with Partition Advisor
 
@@ -11,7 +12,7 @@ You can find the table information for these five scenarios below.
 - **T_SCENARIO_1**: Full unpartitioned table with primary key
 - **T_SCENARIO_2**: Unpartitioned table with high data usage and complex query patterns
 - **T_SCENARIO_3**: Unpartitioned time-based table with high access patterns
-- **T_SCENARIO_4**: Range partitioned table with a full 'Others' partition
+- **T_SCENARIO_4**: Range partitioned table with a full 'OTHERS' partition
 - **T_SCENARIO_5**: Hash-hash partitioned table with some full partitions
 
 The minimum rows for repartitioning, repartitioning threshold, and initial partition values were set to artificially low levels to facilitate demonstration scenarios with minimal data and reduced workload. Refer to the [table placement rule](https://help.sap.com/docs/hana-cloud-database/sap-hana-cloud-sap-hana-database-administration-guide/table-placement-rules?locale=en-US) for detailed parameter guide.
@@ -238,6 +239,10 @@ The table now has 16 leaf partitions to achieve better data distribution while m
 
 ## Summary
 
-You've now successfully generated and applied partitioning recommendations using the partition advisor.
+You've successfully generated partitioning recommendations for your selected schema(s) and table(s) and applied them easily with a simple click of **Apply** from the **Recommendation App**. 
+
+You can find more assets about Partition Advisor below.
+- [Help Documentation](https://help.sap.com/docs/hana-cloud-database/sap-hana-cloud-sap-hana-database-administration-guide/about-partition-advisor?locale=en-US)
+
 
 Continue to - [Exercise 3 - Index Advisor](../ex3/README.md)
