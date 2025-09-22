@@ -137,7 +137,7 @@ SELECT TABLE_NAME, PARTITION_DEFINITION FROM PARTITIONED_TABLES WHERE TABLE_NAME
 - Click **Apply** in the recommendation detail page.
 <br>![](/exercises/ex2/images/02_21.png)
 
-4. **Validate the partitioning implementation**
+4. **Validate partitioning implementation**
 - Re-run the same SQL script to confirm the partitioning has been applied.
 <br>![](/exercises/ex2/images/02_22.png)
 The table has been successfully hash-partitioned into 3 partitions to improve query performance by distributing data based on the most-accessed column.
@@ -161,7 +161,7 @@ SELECT TABLE_NAME, PARTITION_DEFINITION FROM PARTITIONED_TABLES WHERE TABLE_NAME
 3. **Apply the recommendation**
 - Click **Apply** in the recommendation detail page.
 
-4. **Validate the partitioning implementation**
+4. **Validate partitioning implementation**
 - Re-run the same SQL script to confirm the partitioning has been applied.
 <br>![](/exercises/ex2/images/02_24.png)
 The table has been successfully range-partitioned into 3 partitions, isolating frequently accessed recent data in a dedicated partition and improving query performance by avoiding scans of older, unused data.
@@ -195,7 +195,7 @@ SELECT * FROM T_SCENARIO_4 WHERE O_ORDERKEY > 1000000 AND O_ORDERKEY < 1200000;
 - Check the applied recommendation by adding **Applied** in the **Status** filter.
 <br>![](/exercises/ex2/images/02_27.png)
 
-4. **Validate the partitioning implementation**
+4. **Validate partitioning implementation**
 - Re-run the same SQL script to confirm the partitioning has been applied. The oversized 'OTHERS' partition has been split into proper range-based partitioned to improve query performance for range-based queries.
 
 - Check the performance with the same SQL script and confirm the performance improvement compared to before applying the recommendation.
@@ -224,7 +224,7 @@ The table currently has a two-level partitioning scheme: the first level is hash
 3. **Apply the recommendation**
 - Click **Apply** in the recommendation detail page.
 
-4. **Validate the partitioning implementation**
+4. **Validate partitioning implementation**
 - Re-run the same SQL script to confirm the partitioning has been applied.
 <br>![](/exercises/ex2/images/02_30.png)
 The table now has 16 leaf partitions to achieve better data distribution while maintaining partitioning hierarchy balance.

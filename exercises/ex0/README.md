@@ -7,6 +7,7 @@ This session covers configuring the Elastic Compute Node Advisor, Partition Advi
 ## Prerequisites for Exercise 1
 
 - An SAP BTP subaccount
+
 - An SAP HANA Cloud instance (non trial/free-tier instance)
   - The instance must have <ins>at least 5 vCPUs</ins> to use ECN Advisor
   - The instance should allow connections from specific IP addresses and IP ranges. Add IP Addresses of your BTP region ([Service Availability](https://help.sap.com/docs/automation-pilot/automation-pilot/what-is-sap-automation-pilot?locale=en-US)). For the hands-on session, your instance already has the following connection setup.
@@ -34,8 +35,20 @@ This session covers configuring the Elastic Compute Node Advisor, Partition Advi
 ## Prerequisites for Exercise 2
 
 - An SAP BTP subaccount
+
 - An SAP HANA Cloud instance (non trial/free-tier instance)
-- 
+
+- Access to HANA Cloud Central
+
+- SAP HANA Cloud Aministrator role collection to switch on Partition Advisor
+
+- SAP HANA Cloud Viewer role collection to view Partition Advisor information
+
+- Partiton Advisor User with the following privileges:
+  - CATALOG READ system privilege for generating recommendations
+  - PARTITION ADMIN system privilege for applying recommendations
+  - SELECT privilege on SCHEMA ‘SCHEMA NAME’ to enable the advisor user to see a schema and the tables contained in it and generate recommendations for these database objects
+  - SELECT privilege on ‘TABLE NAME’ to enable the advisor user to see and generate recommendations for a specific table only
 
 
 ## Prerequisites for Exercise 3
