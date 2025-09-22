@@ -1,6 +1,6 @@
 # Exercise 2 - Partition Advisor
 
-In this exercise, we will use a **Partition Advisor** to generate partitioning recommendations for 5 difference scnearios and apply those recommendations directly within **Recommendation App** from **HANA Cloud Central**.
+In this exercise, we will use a **Partition Advisor** to generate partitioning recommendations for 5 different scnearios and apply those recommendations directly within **Recommendation App** from **HANA Cloud Central**.
 
 
 ## Exercise 2.1 Generate partitioning recommendations with Partition Advisor
@@ -8,11 +8,11 @@ In this exercise, we will use a **Partition Advisor** to generate partitioning r
 For this hands-on practice, **five exemplifying scenarios** have been designed and set up in your instance.
 
 You can find the table information for these five scenarios below.
-- **T_SCENARIO_1**: A full unpartitioned table with primary key
-- **T_SCENARIO_2**: An unpartitioned table with high data usage and complex query patterns
-- **T_SCENARIO_3**: An unpartitioned time-based table with high access patterns
-- **T_SCENARIO_4**: A range partitioned table with a full 'Others' partition
-- **T_SCENARIO_5**: A hash-hash partitioned table with some full partitions
+- **T_SCENARIO_1**: Full unpartitioned table with primary key
+- **T_SCENARIO_2**: Unpartitioned table with high data usage and complex query patterns
+- **T_SCENARIO_3**: Unpartitioned time-based table with high access patterns
+- **T_SCENARIO_4**: Range partitioned table with a full 'Others' partition
+- **T_SCENARIO_5**: Hash-hash partitioned table with some full partitions
 
 The minimum rows for repartitioning, repartitioning threshold, and initial partition values were set to artificially low levels to facilitate demonstration scenarios with minimal data and reduced workload. Refer to the [table placement rule](https://help.sap.com/docs/hana-cloud-database/sap-hana-cloud-sap-hana-database-administration-guide/table-placement-rules?locale=en-US) for detailed parameter guide.
 
@@ -80,6 +80,12 @@ After completing these steps you will have successfully generated five partition
 After completing these steps, you will have successfully applied all partitioning recommendations from the Recommendation App and validated that the partitioning actions have been implemented as suggested.
 
 ### Scenario 1: Full unpartitioned table with primary key
+
+This scenario has set aggressive partitioning parameters for the table:
+- MIN_ROWS_FOR PARTITIONING: 100
+- REPARTITIONING_THRESHOLD: 100 (very low threshold)
+- INITIAL_PARTITIONS: 3
+
 1. **Review recommendation details for the table T_SCENARIO_1**
 <br>![](/exercises/ex2/images/02_14a.png)
 <br>![](/exercises/ex2/images/02_14b.png)
@@ -108,13 +114,16 @@ SELECT TABLE_NAME, PARTITION_DEFINITION FROM PARTITIONED_TABLES WHERE TABLE_NAME
 4. **Validate partitioning implementation**
 - Re-run the same SQL script to confirm the partitioning has been applied.
 <br>![](/exercises/ex2/images/02_19.png)
-The table has been successfully hash partitioned into 12 partitions, as recommended by the advisor.
+The table has been successfully hash partitioned into 12 partitions on the primary key to distribute data evenly across multiple partitions and improve query performance by avoiding full table scans.
 
 
 ### Scenario 2: Unpartitioned table with high data usage and complex query patterns
+
+This scenario has simulated heavy query load by executing the same query 100 times, creating a usage pattern where a specific column is frequently queried.
+
 1. **Review recommendation details for the table T_SCENARIO_2**
 <br>![](/exercises/ex2/images/02_20.png)
-The advisor identifies the EVENT_TYPE column as the most frequently queried column and recommends hash partitioning on this column for optimal performance.
+The advisor identifies the 'EVENT_TYPE' column as the most frequently queried column and recommends hash partitioning on this column for optimal performance.
 
 2. **Check current partitioning status** 
 - Verify the current partitioning state using the same approach as Scenario 1.
@@ -131,13 +140,15 @@ SELECT TABLE_NAME, PARTITION_DEFINITION FROM PARTITIONED_TABLES WHERE TABLE_NAME
 4. **Validate the partitioning implementation**
 - Re-run the same SQL script to confirm the partitioning has been applied.
 <br>![](/exercises/ex2/images/02_22.png)
-The table has been successfully hash partitioned into 3 partitions, as recommended by the advisor.
+The table has been successfully hash-partitioned into 3 partitions to improve query performance by distributing data based on the most-accessed column.
 
 ### Scenario 3: Unpartitioned time-based table with high access patterns
 
+This scenario has simulated a time-based table with data spanning from 2019 to 2025, creating a historical dataset where recent "hot" data (2023 onwards) is frequently accessed, while older data (2019-2022) remains relatively unused.
+
 1. **Review recommendation details for the table T_SCENARIO_3**
 <br>![](/exercises/ex2/images/02_23.png)
-The advisor suggests range partitioning to isolate the hot data in a single partition.
+The advisor suggests range partitioning to isolate the hot data (2023 onwards) in a single partition.
 
 2. **Check current partitioning status** 
 - Verify the current partitioning state using the same approach as Scenario 1.
@@ -153,10 +164,12 @@ SELECT TABLE_NAME, PARTITION_DEFINITION FROM PARTITIONED_TABLES WHERE TABLE_NAME
 4. **Validate the partitioning implementation**
 - Re-run the same SQL script to confirm the partitioning has been applied.
 <br>![](/exercises/ex2/images/02_24.png)
-The table has been successfully range partitioned into 3 partitions, as recommended by the advisor.
+The table has been successfully range-partitioned into 3 partitions, isolating frequently accessed recent data in a dedicated partition and improving query performance by avoiding scans of older, unused data.
 
 
 ### Scenario 4: Range partitioned table with full 'OTHERS' partition
+
+This scenario has created a range-partitioned table with a problematic 'OTHERS' partition.
 
 1. **Review recommendation details for the table T_SCENARIO_4**
 <br>![](/exercises/ex2/images/02_25.png)
@@ -169,9 +182,9 @@ The table has been successfully range partitioned into 3 partitions, as recommen
 SELECT TABLE_NAME, PARTITION_DEFINITION FROM PARTITIONED_TABLES WHERE TABLE_NAME='T_SCENARIO_4';
 ```
 <br>![](/exercises/ex2/images/02_26.png)
-The table is divided into partitions based on ranges of values in the O_ORDERKEY column, but there are no explicit ranges defined, so all rows with any O_ORDERKEY value are stored in the OTHERS partition.
+The table is divided into partitions based on ranges of values in the 'O_ORDERKEY' column, but there are no explicit ranges defined, so all rows with any 'O_ORDERKEY' value are stored in the 'OTHERS' partition.
 
-- Check the performance by running the following SQL script before applying the recommendation.
+- Check the performance by running the following query on a specific range of order keys before applying the recommendation.
 ```SQL
 SELECT * FROM T_SCENARIO_4 WHERE O_ORDERKEY > 1000000 AND O_ORDERKEY < 1200000;
 ```
@@ -183,7 +196,7 @@ SELECT * FROM T_SCENARIO_4 WHERE O_ORDERKEY > 1000000 AND O_ORDERKEY < 1200000;
 <br>![](/exercises/ex2/images/02_27.png)
 
 4. **Validate the partitioning implementation**
-- Re-run the same SQL script to confirm the partitioning has been applied. The OTHERS partition has been range partitioned into smaller partitions.
+- Re-run the same SQL script to confirm the partitioning has been applied. The oversized 'OTHERS' partition has been split into proper range-based partitioned to improve query performance for range-based queries.
 
 - Check the performance with the same SQL script and confirm the performance improvement compared to before applying the recommendation.
 ```SQL
@@ -192,6 +205,8 @@ SELECT * FROM T_SCENARIO_4 WHERE O_ORDERKEY > 1000000 AND O_ORDERKEY < 1200000;
 
 
 ### Scenario 5: Hash-hash partitioned table with some full partitions
+
+This scenario has created an imbalanced multi-level hash partitioned table. The hash  partitioning on 'REGION' doesn't distribute data evenly, causing some partitions to become full while others remain relatively empty.
 
 1. **Review recommendation details for the table T_SCENARIO_5**
 <br>![](/exercises/ex2/images/02_28_a.png)
@@ -204,7 +219,7 @@ The advisor proposes to increase the number of leaf partitions while keeping the
 SELECT TABLE_NAME, PARTITION_DEFINITION FROM PARTITIONED_TABLES WHERE TABLE_NAME='T_SCENARIO_5';
 ```
 <br>![](/exercises/ex2/images/02_29.png)
-The table currently has a two-level partitioning scheme: the first level is hash partitioned with the REGION value into 2 partitions, and the second level is hash subpartitioned with the CUSTOMER_ID into 2 partitions.
+The table currently has a two-level partitioning scheme: the first level is hash partitioned with the 'REGION' value into 2 partitions, and the second level is hash subpartitioned with the 'CUSTOMER_ID' into 2 partitions.
 
 3. **Apply the recommendation**
 - Click **Apply** in the recommendation detail page.
@@ -212,7 +227,7 @@ The table currently has a two-level partitioning scheme: the first level is hash
 4. **Validate the partitioning implementation**
 - Re-run the same SQL script to confirm the partitioning has been applied.
 <br>![](/exercises/ex2/images/02_30.png)
-The table now has 8 leaf partitions while maintaining the partitioning hierarchy balance.
+The table now has 16 leaf partitions to achieve better data distribution while maintaining partitioning hierarchy balance.
 
 ## Summary
 
