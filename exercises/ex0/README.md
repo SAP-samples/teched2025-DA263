@@ -11,7 +11,7 @@ This session covers configuring the Elastic Compute Node Advisor, Partition Advi
 - An SAP HANA Cloud instance (non trial/free-tier instance)
   - The instance must have <ins>at least 5 vCPUs</ins> to use ECN Advisor
   - The instance should allow connections from specific IP addresses and IP ranges. Add IP Addresses of your BTP region ([Service Availability](https://help.sap.com/docs/automation-pilot/automation-pilot/what-is-sap-automation-pilot?locale=en-US)). For the hands-on session, your instance already has the following connection setup.
-  <br>![](/exercises/ex1/images/01_ap00.png)
+  <br>![](/exercises/ex1/images/00_ap00.png)
 
 - Access to HANA Cloud Central
 
@@ -24,7 +24,7 @@ This session covers configuring the Elastic Compute Node Advisor, Partition Advi
 
 - Access to SAP Automation Pilot Service
 
-- WORKLOAD ADMIN privilege
+- **WORKLOAD ADMIN** privilege
   - to route workload to an ECN using workload classes
 
 - At least one Workload Class must be available in your instance, before the analysis timeframe, for routing queries to the ECN
@@ -40,15 +40,17 @@ This session covers configuring the Elastic Compute Node Advisor, Partition Advi
 
 - Access to HANA Cloud Central
 
-- SAP HANA Cloud Aministrator role collection to switch on Partition Advisor
+- SAP HANA Cloud Aministrator role collection
+  - to switch on Partition Advisor
 
-- SAP HANA Cloud Viewer role collection to view Partition Advisor information
+- SAP HANA Cloud Viewer role collection
+  - to view Partition Advisor information
 
-- Partiton Advisor User with the following privileges:
-  - CATALOG READ system privilege for generating recommendations
-  - PARTITION ADMIN system privilege for applying recommendations
-  - SELECT privilege on SCHEMA ‘SCHEMA NAME’ to enable the advisor user to see a schema and the tables contained in it and generate recommendations for these database objects
-  - SELECT privilege on ‘TABLE NAME’ to enable the advisor user to see and generate recommendations for a specific table only
+- **Partiton Advisor User** with following privileges:
+  - **CATALOG READ** system privilege for generating recommendations
+  - **PARTITION ADMIN** system privilege for applying recommendations
+  - **SELECT** privilege ON SCHEMA **‘SCHEMA NAME’** to enable the advisor user to see <ins>a schema and the tables contained in it</ins>
+  - (Optional) **SELECT** privilege ON **‘TABLE NAME’** to enable the advisor user to see and generate recommendations for <ins>a specific table only</ins>
 
 
 ## Prerequisites for Exercise 3

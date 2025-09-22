@@ -1,6 +1,6 @@
 # Exercise 2 - Partition Advisor
 
-In this exercise, we will use a **Partition Advisor** to generate partitioning recommendations for 5 different scnearios and apply those recommendations directly within **Recommendation App** from **HANA Cloud Central**.
+In this exercise, we will use a **Partition Advisor** to generate partitioning recommendations for 5 different scnearios and apply those recommendations easily within **Recommendation App** from **HANA Cloud Central**.
 
 
 ## Exercise 2.1 Generate partitioning recommendations with Partition Advisor
@@ -68,7 +68,7 @@ After completing these steps you will have successfully generated five partition
 - Click **Refresh** icon on the top right side to see the progress updated.
 <br>![](/exercises/ex2/images/02_11.png)
 
-- The recommendations have been generated and the **Status** has changed to **Executed**. Click **Recommendations** tab to view the available recommendations.
+- The recommendations have been generated and the **Status** has changed to **Executed**. Go to **Recommendations** tab to view the available recommendations.
 <br>![](/exercises/ex2/images/02_12.png)
 
 - Here you can find the list of available recommendations for all 5 scenarios.
@@ -173,6 +173,7 @@ This scenario has created a range-partitioned table with a problematic 'OTHERS' 
 
 1. **Review recommendation details for the table T_SCENARIO_4**
 <br>![](/exercises/ex2/images/02_25.png)
+The advisor recommends splitting the partition into more proper range-based partitions.
 
 2. **Check current partitioning status** 
 - To verify the current partitioning state of table 'T_SCENARIO_4', repeat the same steps from Scenario 1.
@@ -181,13 +182,16 @@ This scenario has created a range-partitioned table with a problematic 'OTHERS' 
 ```SQL
 SELECT TABLE_NAME, PARTITION_DEFINITION FROM PARTITIONED_TABLES WHERE TABLE_NAME='T_SCENARIO_4';
 ```
+- The table is divided into partitions based on ranges of values in the 'O_ORDERKEY' column, but there are no explicit ranges defined, so all rows with any 'O_ORDERKEY' value are stored in the 'OTHERS' partition.
 <br>![](/exercises/ex2/images/02_26.png)
-The table is divided into partitions based on ranges of values in the 'O_ORDERKEY' column, but there are no explicit ranges defined, so all rows with any 'O_ORDERKEY' value are stored in the 'OTHERS' partition.
 
 - Check the performance by running the following query on a specific range of order keys before applying the recommendation.
 ```SQL
 SELECT * FROM T_SCENARIO_4 WHERE O_ORDERKEY > 1000000 AND O_ORDERKEY < 1200000;
 ```
+
+- Check **Execution Elapsed Time**, **Execution CPU Time** and **Server Peak Memory** in the **History** tab.
+<br>![](/exercises/ex2/images/02_26_a.png)
 
 3. **Apply the recommendation**
 - Click **Apply** in the recommendation detail page.
@@ -196,13 +200,16 @@ SELECT * FROM T_SCENARIO_4 WHERE O_ORDERKEY > 1000000 AND O_ORDERKEY < 1200000;
 <br>![](/exercises/ex2/images/02_27.png)
 
 4. **Validate partitioning implementation**
-- Re-run the same SQL script to confirm the partitioning has been applied. The oversized 'OTHERS' partition has been split into proper range-based partitioned to improve query performance for range-based queries.
+- Re-run the same SQL script to confirm the partitioning has been applied. The oversized 'OTHERS' partition has been split into proper range-based partitions to improve query performance for range-based queries.
+<br>![](/exercises/ex2/images/02_26_c.png)
 
 - Check the performance with the same SQL script and confirm the performance improvement compared to before applying the recommendation.
 ```SQL
 SELECT * FROM T_SCENARIO_4 WHERE O_ORDERKEY > 1000000 AND O_ORDERKEY < 1200000;
 ```
 
+- You can see that the **Execution Elapsed Time**, **Execution CPU Time** and **Server Peak Memory** has been reduced significantly.
+<br>![](/exercises/ex2/images/02_26_b.png)
 
 ### Scenario 5: Hash-hash partitioned table with some full partitions
 
@@ -218,8 +225,8 @@ The advisor proposes to increase the number of leaf partitions while keeping the
 ```SQL
 SELECT TABLE_NAME, PARTITION_DEFINITION FROM PARTITIONED_TABLES WHERE TABLE_NAME='T_SCENARIO_5';
 ```
+- The table currently has a two-level partitioning scheme: the first level is hash partitioned with the 'REGION' value into 2 partitions, and the second level is hash subpartitioned with the 'CUSTOMER_ID' into 2 partitions.
 <br>![](/exercises/ex2/images/02_29.png)
-The table currently has a two-level partitioning scheme: the first level is hash partitioned with the 'REGION' value into 2 partitions, and the second level is hash subpartitioned with the 'CUSTOMER_ID' into 2 partitions.
 
 3. **Apply the recommendation**
 - Click **Apply** in the recommendation detail page.
