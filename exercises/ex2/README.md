@@ -241,7 +241,7 @@ The table now has 16 leaf partitions to achieve better data distribution while m
 
 You've successfully generated partitioning recommendations for your selected schema(s) and table(s) and applied them easily with a simple click of **Apply** from the **Recommendation App**. 
 
-You can find more assets about Partition Advisor below.
+You can find an asset about Partition Advisor below.
 - [Help Documentation](https://help.sap.com/docs/hana-cloud-database/sap-hana-cloud-sap-hana-database-administration-guide/about-partition-advisor?locale=en-US)
 
 
