@@ -2,11 +2,9 @@
 
 **Partition Advisor** generates intelligent recommendations for partitioning tables based on their size, usage patterns and data distribution.
 
-In this exercise, we will use this **Partition Advisor** to generate partitioning recommendations for 5 different scnearios and apply those recommendations easily within **Recommendation App** from **HANA Cloud Central**.
+In this exercise, we will use this **Partition Advisor** to generate partitioning recommendations and apply them easily within **Recommendation App** from **HANA Cloud Central**.
 
-## Exercise 2.1 Generate partitioning recommendations with Partition Advisor
-
-For this hands-on practice, **five exemplifying scenarios** have been designed and set up in your instance.
+For this hands-on exercise, **five exemplifying scenarios** have been designed and set up in your instance.
 
 You can find the table information for these five scenarios below.
 - **T_SCENARIO_1**: Full unpartitioned table with primary key
@@ -17,7 +15,9 @@ You can find the table information for these five scenarios below.
 
 The minimum rows for repartitioning, repartitioning threshold, and initial partition values were set to artificially low levels to facilitate demonstration scenarios with minimal data and reduced workload. Refer to the [table placement rule](https://help.sap.com/docs/hana-cloud-database/sap-hana-cloud-sap-hana-database-administration-guide/table-placement-rules?locale=en-US) for detailed parameter guide.
 
-After completing these steps you will have successfully generated five partitioning recommendations for your HANA Cloud instance from HANA Cloud Central.
+## Exercise 2.1 Generate partitioning recommendations with Partition Advisor
+
+After completing these steps you will have successfully generated five partitioning recommendations for your HANA Cloud instance in **Recommendation App**.
 
 1. **Open SAP BTP Cockpit** (Same with Exercise 1)
 - Navigate to [SAP BTP Cockpit](https://tdct3ched1.accounts.ondemand.com/oauth2/authorize?response_type=code&scope=openid+email+profile&redirect_uri=https%3A%2F%2Femea.cockpit.btp.cloud.sap%2Flogin%2Fcallback&client_id=306ee77d-68d9-4398-ac62-1d07872563f9&state=EPkcyY---sTacmmvjflnPQ&code_challenge=fqM4tO2wlVaQLhRKfiqhS_2sXqA5WHfsG4QxvAc4oq4&code_challenge_method=S256).
@@ -33,7 +33,7 @@ After completing these steps you will have successfully generated five partition
 
 
 3. **Switch On the Partition Advisor**
-- Choose **Partition** from **Recommendations** App.
+- Choose **Partition** from **Recommendations** card.
 <br>![](/exercises/ex2/images/02_01.png)
 
 - Click **Switch On**.

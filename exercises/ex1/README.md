@@ -32,7 +32,7 @@ After completing these steps you will have successfully generated an ECN recomme
 <br>![](/exercises/ex1/images/01_01_01.png)  
 
 
-- Find a **Recommendations** App tile and click **Elastic Compute Node**.
+- Find a **Recommendations** card and click **Elastic Compute Node**.
 <br>![](/exercises/ex1/images/01_02.png)  
 
 

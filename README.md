@@ -29,7 +29,7 @@ Prerequisites for each exercise are detailed in [Getting Started](exercises/ex0/
     - [Exercise 2.2 - Apply partitioning recommendations from Recommendation App](exercises/ex2#exercise-22-sub-exercise-2-description)
 - [Exercise 3 - Index Advisor](exercises/ex3/)
     - [Exercise 3.1 - Generate index recommendations with Index Advisor](exercises/ex3#exercise-31-sub-exercise-1-description)
-    - [Exercise 3.2 - Apply index recommendations manually](exercises/ex3#exercise-32-sub-exercise-2-description)
+    - [Exercise 3.2 - Apply index recommendations via SQL Console](exercises/ex3#exercise-32-sub-exercise-2-description)
   
 
 Start the exercises [here](exercises/ex0/).
