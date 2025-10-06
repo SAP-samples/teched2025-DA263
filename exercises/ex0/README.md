@@ -57,7 +57,21 @@ This session covers configuring the Elastic Compute Node Advisor, Partition Advi
 
 - An SAP BTP subaccount
 - An SAP HANA Cloud instance (non trial/free-tier instance)
+- SAP HANA Cloud Aministrator role collection
+  - to switch on Index Advisor
 
+- SAP HANA Cloud Viewer role collection
+  - to view Index Advisor information
+
+- **CATALOG READ** system privilege
+
+- **SELECT** privilege on the table or the schema containing the table
+
+- One of the following must be true:
+  - You <ins>own</ins> the table referenced by the index.
+  - You <ins>own</ins> the schema that contains the table referenced by the index.
+  - You have the **INDEX** object-level privilege on the table referenced by the index.
+  - You have the **INDEX** schema-level privilege on the schema containing the table referenced by the index.
 
 
 ## Summary

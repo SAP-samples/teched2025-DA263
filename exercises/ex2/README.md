@@ -237,6 +237,19 @@ SELECT TABLE_NAME, PARTITION_DEFINITION FROM PARTITIONED_TABLES WHERE TABLE_NAME
 <br>![](/exercises/ex2/images/02_30.png)
 The table now has 16 leaf partitions to achieve better data distribution while maintaining partitioning hierarchy balance.
 
+## Clean-up
+
+**Switch off Partition Advisor**
+
+- Go to **Advisors** tab in the Recommendation App.
+
+- Click the three dots on the top right side and select **Switch Off**.
+
+- Choose **Remove data immediately** and click **Switch Off**.
+
+The Partition Advisor is off and all recommendation data has been deleted.
+You can go back to **Instance Overview** page.
+
 ## Summary
 
 You've successfully generated partitioning recommendations for your selected schema(s) and table(s) and applied them easily with a simple click of **Apply** from the **Recommendation App**. 

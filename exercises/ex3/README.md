@@ -100,7 +100,7 @@ You will compare the performance after applying all recommendations.
 - You can try generating recommendations again to see if there are more recommendations generated.
 <br>![](/exercises/ex3/images/03_19.png)
 
-5. **Clean up the recommendations**
+5. **Delete the existing recommendations**
 - As the current Index Advisor doesn't support Apply feature, it cannot track the status of each recommendation. After you have applied the recommendations manually, the recommendations will still stay as Available in the list. If you would like to clean up these recommendations, you can switch off the advisor instead.
 
 - In the **Advisors** tab, click **Index Advisor** from the list.
@@ -115,9 +115,24 @@ You will compare the performance after applying all recommendations.
 - The recommendations are deleted from the list.
 <br>![](/exercises/ex3/images/03_23.png)
 
+## Clean-up
+
+**Stop your instance.**
+
+- Go back to your Instance list.
+
+- Click three dots icon in the Actions column and choose **Stop** from the list.
+
+- Click **Stop Instance** in the pop-up window.
+
+- Refresh the page to see if the instance has been stopped.
+
+- Once it's stopped, close the HANA Cloud Central.
 
 ## Summary
 
 You've now completed all the hands-on exercise for **DA263: SAP HANA Cloud Advisor and Automation**.
+
+
 
 

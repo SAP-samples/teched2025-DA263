@@ -6,9 +6,10 @@ In this exercise, we will configure **Elastic Compute Node Advisor (ECN Advisor)
 
 An ECN is an instance type running an additional computeserver process (like an indexserver) which has only a temporary persistence and which can be easily added and dropped when required depending on the current workload state. It is useful to handle the known peak loads without upsizing your coordinator node permanently. You can find more information about the ECN in [this guide](https://help.sap.com/docs/hana-cloud-database/sap-hana-cloud-sap-hana-database-administration-guide/sap-hana-cloud-elastic-compute-node?locale=en-US).
 
+
 ## What is SAP Automation Pilot?
 
-SAP Automation Pilot is a cloud-based automation service within the SAP Business Technology Platform (BTP) DevOps portfolio. As a low-code/no-code engine, it is designed to simplify and automate complex amnual processes and tasks, enhancing efficiency and reducing operational overhead by designing and running Ops automation flows. You can find further information about Automation Pilot [here](https://help.sap.com/docs/automation-pilot/automation-pilot/what-is-sap-automation-pilot?locale=en-US), and please be noted that this service is <u>**not yet**</u> available in all regions.
+SAP Automation Pilot is a cloud-based automation service within the SAP Business Technology Platform (BTP) DevOps portfolio. As a low-code/no-code engine, it is designed to simplify and automate complex manual processes and tasks, enhancing efficiency and reducing operational overhead by designing and running Ops automation flows. You can find further information about Automation Pilot [here](https://help.sap.com/docs/automation-pilot/automation-pilot/what-is-sap-automation-pilot?locale=en-US), and please be noted that this service is <u>**not yet**</u> available in all regions.
 
 ## Exercise 1.1 Configure ECN Advisor and generate an ECN recommendation
 
@@ -40,8 +41,7 @@ After completing these steps you will have successfully generated an ECN recomme
 <br>![](/exercises/ex1/images/01_03.png)  
 
 
-- Add **Thresholds** for Memory and Compute. The default value is 80%, but in this exercise, we will set it as **_70%_** for both Memory and Compute.
-<br> You can also enable ECN Advisor to automatically generate a recommendation in a weekly basis, but we <u>**do not use**</u> this feature in this exercise.
+- Add **Thresholds** for Memory and Compute. The default value is 80%, but in this exercise, we will set it as **_70%_** for both **Memory** and **Compute**.
 <br>![](/exercises/ex1/images/01_04.png)
 <br> Now the ECN Advisor is **switched on**.  
 
@@ -51,8 +51,8 @@ After completing these steps you will have successfully generated an ECN recomme
 <br>![](/exercises/ex1/images/01_05.png)  
 
 
-- You can see a recommendation topic selected as **Elastic Compute Node**. Define the **Analysis Timeframe** that the advisor will analyze your resource usage to generate a recommendation. The time frame must be <u>*between 30 minutes and 14 days*</u> in length. It must end <u>*at least 20 minutes before*</u> the recommendation request, and must be <u>*within the last 14 days*</u>. Once you have selected the timeframe, click **Generate Recommendation** at the bottom.
-<br>![](/exercises/ex1/images/01_06.png)  
+- You can see a recommendation topic selected as **Elastic Compute Node**. Define the **Analysis Timeframe** that the advisor will analyze your resource usage to generate a recommendation. The time frame must be <u>*between 30 minutes and 24 hours*</u> in length. It must end <u>*at least 20 minutes before*</u> the recommendation request, and must be <u>*within the last 14 days*</u>. Once you have selected the timeframe, click **Generate Recommendation** at the bottom.
+<br>![](/exercises/ex1/images/01_06.png)
 
 
 - The ECN Advisor is **Generating** a recommendation. You can click Refresh icon at the top right side to see if the recommendation has been generated.
@@ -78,8 +78,6 @@ After completing these steps you will have successfully generated an ECN recomme
 
 <br>Now you have successfully generated the ECN recommendation. You can move on to the next step to provision and deprovision an ECN as recommended by the advisor.
 
-
-<br>
 
 ## Exercise 1.2 Provision and deprovision an ECN with SAP Automation Pilot
 
@@ -184,8 +182,28 @@ Add **cpu**, **memory**, **storage** as recommended, and add a **nodeName**. Mak
 <br>![](/exercises/ex1/images/01_ap35.png)
 <br>![](/exercises/ex1/images/01_ap36.png)
 
+5. **Run the workload with ECN**
 
-5. **Deprovision ECN with Commands**
+- Open the SQL Console.
+<br>![](/exercises/ex1/images/01_15.png)
+
+
+- Connect to **ECN User** by running the following script.
+```SQL
+CONNECT ECNUSER PASSWORD Ecnadvisor1;
+```
+
+- Run the following script to call the pre-defined procedure (CALL_SPIKE) for the workload. It would take 4-5 minutes for this statement to run.
+```SQL
+CALL CALL_SPIKE();
+```
+
+- Once it's executed, go back to **Instance Overview** page and click **Compute** card.
+
+- Scroll down a bit and open **Elastic Compute Node (ecn1)** part. You can verify that the workload was run with the **ecn1** from the spike observed in the Compute graph.
+<br>![](/exercises/ex1/images/01_16.png)
+
+6. **Deprovision ECN with Commands**
 - Choose **DeprovisionHanaCloudElasticComputeNode** from the **Commands** list.
 <br>![](/exercises/ex1/images/01_ap37.png)
 
@@ -209,18 +227,33 @@ Add **cpu**, **memory**, **storage** as recommended, and add a **nodeName**. Mak
 <br>![](/exercises/ex1/images/01_ap44.png)
 
 
-6. **Easily Repeat Commands with Automation Pilot**
+7. **Easily Repeat Commands with Automation Pilot**
 - To simplify repeating the provisioning and deprovisioning of ECN with the same configuration in a regular basis, you can go to **Executions** list and select the command that you have executed before and simply **Retrigger** the command.
 <br>![](/exercises/ex1/images/01_ap45.png)
 <br>![](/exercises/ex1/images/01_ap46.png)
 
+
+## Clean-up
+
+**Switch off ECN Advisor**
+
+- Go to **Advisors** tab in the Recommendation App.
+
+- Click the three dots on the top right side and select **Switch Off**.
+<br>![](/exercises/ex1/images/01_13.png)
+
+- Choose **Remove data immediately** and click **Switch Off**.
+<br>![](/exercises/ex1/images/01_14.png)
+
+The ECN Advisor is off now and all recommendation data has been deleted.
+You can go back to **Instance Overview** page.
 
 
 ## Summary
 
 You've learned how to configure ECN Advisor to generate recommendations for your workload, and how to provision and deprovision ECNs more simply and automatically with Automation Pilot.
 
-You can find more assets about ECN and ECN Advisor below.
+You can find more assets about ECN and ECN Advisor below. Before moving on to the next exercise, please read the blog to better understand the real life scenario for the ECN.
 - Blog: [Harnessing Dynamic Elasticity (Elastic Compute Node) for Smarter Scaling in SAP HANA Cloud](https://community.sap.com/t5/technology-blog-posts-by-sap/harnessing-dynamic-elasticity-elastic-compute-node-for-smarter-scaling-in/ba-p/14016836)
 - Tutorial: [Use an Elastic Compute Node (ECN) for Scheduled Workloads](https://developers.sap.com/tutorials/hana-cloud-ecn..html#dab4c6d2-91f5-4b55-be9f-16a0ee7a50e2)
 
