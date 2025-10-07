@@ -11,7 +11,7 @@ This session covers configuring the Elastic Compute Node Advisor, Partition Advi
 - An SAP HANA Cloud instance (non trial/free-tier instance)
   - The instance must have <ins>at least 5 vCPUs</ins> to use ECN Advisor
   - The instance should allow connections from specific IP addresses and IP ranges. Add IP Addresses of your BTP region ([Service Availability](https://help.sap.com/docs/automation-pilot/automation-pilot/what-is-sap-automation-pilot?locale=en-US)). For the hands-on session, your instance already has the following connection setup.
-  <br>![](/exercises/ex1/images/00_ap00.png)
+  <br>![](/exercises/ex0/images/00_ap00.png)
 
 - Access to HANA Cloud Central
 

@@ -83,13 +83,28 @@ After completing these steps you will have successfully generated an ECN recomme
 
 You can provision and deprovision the ECN and route the workload class to the ECN within HANA Cloud Central. However, to make this process more easily repeatable, in this practice, you will learn how to make use of **SAP Automation Pilot**.
 
+1. **Configure the HANA Cloud instance to allow connections for Automation Pilot**
+- In the Instance page at HANA Cloud Central, click **Manage Configuration** from the **Actions** drop-down list.
 
-1. **Open Automation Pilot from SAP BTP Cockpit**
+- Go to **Connections**, choose **Allow specific IP addresses and IP ranges** option and then add the following 6 IP addresses.
+```
+18.192.167.80
+18.158.182.81
+18.192.94.153
+18.159.0.107
+18.159.145.225
+3.122.189.245
+```
+<br>![](/exercises/ex1/images/00_ap00.png)
+
+- Save the configuration.
+
+2. **Open Automation Pilot from SAP BTP Cockpit**
 - Go back to [SAP BTP Cockpit](https://tdct3ched1.accounts.ondemand.com/oauth2/authorize?response_type=code&scope=openid+email+profile&redirect_uri=https%3A%2F%2Femea.cockpit.btp.cloud.sap%2Flogin%2Fcallback&client_id=306ee77d-68d9-4398-ac62-1d07872563f9&state=EPkcyY---sTacmmvjflnPQ&code_challenge=fqM4tO2wlVaQLhRKfiqhS_2sXqA5WHfsG4QxvAc4oq4&code_challenge_method=S256).
 - Click **Automation Pilot** from Application list.
 <br>![](/exercises/ex1/images/01_ap01.png)
 
-2.	**Import an ECN HANA Cloud Other Environment Catalog**
+3.	**Import an ECN HANA Cloud Other Environment Catalog**
 - Go to **My Catalogs** and click **Import** button on the top right side.
 <br>![](/exercises/ex1/images/01_ap02.png)
 
@@ -103,7 +118,7 @@ You can provision and deprovision the ECN and route the workload class to the EC
 <br>![](/exercises/ex1/images/01_ap05.png)
 
 
-3. **Edit Inputs of the Catalog**
+4. **Edit Inputs of the Catalog**
 - Click **Inputs** in the catalog.
 <br>![](/exercises/ex1/images/01_ap19.png)
 
@@ -142,7 +157,7 @@ You can provision and deprovision the ECN and route the workload class to the EC
 <br>![](/exercises/ex1/images/01_ap22.png)
 
 
-4. **Provision ECN with Commands**
+5. **Provision ECN with Commands**
 - Click **Commands** from the catalog.
 <br>![](/exercises/ex1/images/01_ap23.png)
 
@@ -182,7 +197,7 @@ Add **cpu**, **memory**, **storage** as recommended, and add a **nodeName**. Mak
 <br>![](/exercises/ex1/images/01_ap35.png)
 <br>![](/exercises/ex1/images/01_ap36.png)
 
-5. **Run the workload with ECN**
+6. **Run the workload with ECN**
 
 - Open the SQL Console.
 <br>![](/exercises/ex1/images/01_15.png)
@@ -203,7 +218,7 @@ CALL CALL_SPIKE();
 - Scroll down a bit and open **Elastic Compute Node (ecn1)** part. You can verify that the workload was run with the **ecn1** from the spike observed in the Compute graph.
 <br>![](/exercises/ex1/images/01_16.png)
 
-6. **Deprovision ECN with Commands**
+7. **Deprovision ECN with Commands**
 - Choose **DeprovisionHanaCloudElasticComputeNode** from the **Commands** list.
 <br>![](/exercises/ex1/images/01_ap37.png)
 
@@ -227,7 +242,7 @@ CALL CALL_SPIKE();
 <br>![](/exercises/ex1/images/01_ap44.png)
 
 
-7. **Easily Repeat Commands with Automation Pilot**
+8. **Easily Repeat Commands with Automation Pilot**
 - To simplify repeating the provisioning and deprovisioning of ECN with the same configuration in a regular basis, you can go to **Executions** list and select the command that you have executed before and simply **Retrigger** the command.
 <br>![](/exercises/ex1/images/01_ap45.png)
 <br>![](/exercises/ex1/images/01_ap46.png)
