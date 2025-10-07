@@ -28,10 +28,18 @@ After completing these steps you will have successfully generated an ECN recomme
 <br>![](/exercises/ex1/images/01_01.png)
 
 
-3. **Switch on ECN Advisor**
+3. **Check Resource Consumption**
 - When you click your HANA Cloud instance, you see an **Overview** page with many different tiles.
-<br>![](/exercises/ex1/images/01_01_01.png)  
+<br>![](/exercises/ex1/images/01_01_01.png)
 
+- Click **Compute** card.
+
+- When you choose **24 Hours** on top, you will see some compute spikes occurred.
+<br>![](/exercises/ex1/images/01_17.png)
+
+
+4. **Switch on ECN Advisor**
+- Go back to **Overview** page by clicking your instance name on top next to Usage Monitor.
 
 - Find a **Recommendations** card and click **Elastic Compute Node**.
 <br>![](/exercises/ex1/images/01_02.png)  
@@ -46,7 +54,7 @@ After completing these steps you will have successfully generated an ECN recomme
 <br> Now the ECN Advisor is **switched on**.  
 
 
-4. **Generate Recommendations**
+5. **Generate Recommendations**
 - Click **Generate Recommendations**.
 <br>![](/exercises/ex1/images/01_05.png)  
 
@@ -63,7 +71,7 @@ After completing these steps you will have successfully generated an ECN recomme
 <br>![](/exercises/ex1/images/01_08.png)
 
 
-5. **Review Recommendation Details** 
+6. **Review Recommendation Details** 
 - There is a **Recommended Configuration** and an **Explanation** field. In the **Recommended Configuration**, you can see the recommended schedule and configuration for the ECN as well as expected capacity units that will be consumed with the ECN. You can click **Workload Class** to see which workload class is recommended to be routed to the ECN.
 <br>![](/exercises/ex1/images/01_09.png)
 <br>![](/exercises/ex1/images/01_10.png)
