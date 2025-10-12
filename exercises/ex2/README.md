@@ -17,7 +17,7 @@ For this hands-on exercise, **five exemplifying scenarios** have been designed. 
 
 The minimum rows for repartitioning, repartitioning threshold, and initial partition values were set to artificially low levels to facilitate demonstration scenarios with minimal data and reduced workload. Refer to the [table placement rule](https://help.sap.com/docs/hana-cloud-database/sap-hana-cloud-sap-hana-database-administration-guide/table-placement-rules?locale=en-US) for detailed parameter guide.
 
-**T_SCENARIO_1**, **T_SCENARIO_4**, and **T_SCENARIO_5** have been already set up in your instance. You need to create the other two tables, **T_SCENARIO_2** and **T_SCENARIO_3** before starting the Exercise 2.1. Please copy the following scripts and run each of them in the SQL Console as instructed at the beginning of the workshop. You will learn more about each table in the Exercise 2.2.
+**T_SCENARIO_1**, **T_SCENARIO_4**, and **T_SCENARIO_5** have been already set up in your instance. You need to create the other two tables, **T_SCENARIO_2** and **T_SCENARIO_3** before starting the Exercise 2.1. Please copy the following scripts and run each of them in the **SQL Console** as instructed at the beginning of the workshop. You will learn more about each table in the Exercise 2.2.
 
 - **T_SCENARIO_2**
 
@@ -124,7 +124,7 @@ After completing these steps you will have successfully generated five partition
 - Click **Switch On**.
 <br>![](/exercises/ex2/images/02_02.png)
 
-- You need a dedicated **Partition Advisor User** to use the Partition Advisor. You can find more details about the Partition Advisor User in the [Getting Started](exercises/ex0/) section. The **Partition Advisor User** has been already created for this exercise. Add the following credential and click **Save**.
+- You need a dedicated **Partition Advisor User** to use the Partition Advisor. You can find more details about the **Partition Advisor User** in the [Getting Started](exercises/ex0/) section. The **Partition Advisor User** has been already created for this exercise. Add the following credential and click **Save**.
 
   - Username: _**PAUSER**_
   - Password: _**Partitionadvisor1**_

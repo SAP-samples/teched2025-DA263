@@ -278,6 +278,8 @@ You can find an asset about Index Advisor below.
 
 You've now completed all the hands-on exercise for **DA263: SAP HANA Cloud Advisor and Automation**.
 
+Thank you for your participation.
+
 
 
 

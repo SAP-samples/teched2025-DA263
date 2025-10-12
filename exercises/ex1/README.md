@@ -120,7 +120,7 @@ You need to add the IP address one by one by clicking **Add** button as you see 
 
 3.	**Import an ECN HANA Cloud Other Environment Catalog**
 
-With the Automation Pilot, you can run predefined commands or create custom commands. For ECN provisioning and deprovisioning in HANA Cloud Other Environment instance, we have published a catalog with predefined commands to make it easy to use. This catalog is not included in **Provided Catalogs** of the service, but you will import the prepared catalog through the following steps.
+With the **Automation Pilot**, you can run predefined commands or create custom commands. For ECN provisioning and deprovisioning in HANA Cloud Other Environment instance, we have published a catalog with predefined commands to make it easy to use. This catalog is not included in **Provided Catalogs** of the service, but you will import the prepared catalog through the following steps.
 
 - Go to **My Catalogs** and click **Import** button on the top right side.
 <br>![](/exercises/ex1/images/01_ap02.png)
