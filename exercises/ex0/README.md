@@ -1,8 +1,10 @@
 # Getting Started
 
-This session covers configuring the Elastic Compute Node Advisor, Partition Advisor, and Index Advisor to generate database optimization recommendations, and explore multiple ways to apply those recommendations. 
+This hands-on workshop session will transform how you optimize your SAP HANA Cloud databases. You will explore the intelligent advisors available in HANA Cloud Central, where you'll learn to configure and leverage the Elastic Compute Node Advisor, Partition Advisor, and Index Advisor.
 
-<ins>**For the hands-on workshop, all prerequisites listed below are already in place.**</ins> This information is for users who want to complete the exercise on their own outside the session.
+This interactive session is designed to give you practical experience in generating intelligent database optimization recommendations that can improve your system performance. You will dive deep into the configuration process for each advisor, and learn multiple proven approaches for implementing these recommendations.
+
+<ins>**For the hands-on workshop, most of prerequisites listed below are already in place.**</ins> This information is for users who want to complete the exercise outside the session with their own system environment. You can read the following prerequisites for your information, but you are <ins>**not**</ins> required to do any actions here.
 
 ## Prerequisites for Exercise 1
 
@@ -27,7 +29,7 @@ This session covers configuring the Elastic Compute Node Advisor, Partition Advi
 - **WORKLOAD ADMIN** privilege
   - to route workload to an ECN using workload classes
 
-- At least one Workload Class must be available in your instance, before the analysis timeframe, for routing queries to the ECN
+- At least one **Workload Class** must be available in your instance, before the analysis timeframe, for routing queries to the ECN
 
 - Further information on [scope and limitations of ECN Advisor](https://help.sap.com/docs/hana-cloud-database/sap-hana-cloud-sap-hana-database-administration-guide/elastic-compute-node-advisor?locale=en-US)
 
@@ -63,11 +65,11 @@ This session covers configuring the Elastic Compute Node Advisor, Partition Advi
 - SAP HANA Cloud Viewer role collection
   - to view Index Advisor information
 
-- **CATALOG READ** system privilege
+- **CATALOG READ** system privilege for generating recommendations
 
-- **SELECT** privilege on the table or the schema containing the table
+- **SELECT** privilege on the table or the schema containing the table for generating recommendations
 
-- One of the following must be true:
+- One of the following must be true for applying recommendations:
   - You <ins>own</ins> the table referenced by the index.
   - You <ins>own</ins> the schema that contains the table referenced by the index.
   - You have the **INDEX** object-level privilege on the table referenced by the index.

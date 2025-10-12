@@ -4,7 +4,7 @@
 
 In this exercise, we will use this **Partition Advisor** to generate partitioning recommendations and apply them easily within **Recommendation App** from **HANA Cloud Central**.
 
-For this hands-on exercise, **five exemplifying scenarios** have been designed and set up in your instance.
+For this hands-on exercise, **five exemplifying scenarios** have been designed.
 
 You can find the table information for these five scenarios below.
 - **T_SCENARIO_1**: Full unpartitioned table with primary key
@@ -15,6 +15,86 @@ You can find the table information for these five scenarios below.
 
 The minimum rows for repartitioning, repartitioning threshold, and initial partition values were set to artificially low levels to facilitate demonstration scenarios with minimal data and reduced workload. Refer to the [table placement rule](https://help.sap.com/docs/hana-cloud-database/sap-hana-cloud-sap-hana-database-administration-guide/table-placement-rules?locale=en-US) for detailed parameter guide.
 
+**T_SCENARIO_1**, **T_SCENARIO_4**, and **T_SCENARIO_5** have been already set up in your instance. You need to create the other two tables, **T_SCENARIO_2** and **T_SCENARIO_3** before starting the Exercise 2.1. Please copy the following scripts and run each of them in the SQL Console as instructed at the beginning of the workshop. You will learn more about each table in the Exercise 2.2.
+
+**T_SCENARIO_2**
+```SQL
+SET SCHEMA PA_DEMO;
+
+ALTER SYSTEM ALTER TABLE PLACEMENT (SCHEMA_NAME=>'PA_DEMO', TABLE_NAME=>'T_SCENARIO_2')
+SET (MIN_ROWS_FOR_PARTITIONING=>100, REPARTITIONING_THRESHOLD=>10000, INITIAL_PARTITIONS=>3);
+
+CREATE COLUMN TABLE T_SCENARIO_2(
+        EVENT_ID INTEGER,
+        CUSTOMER_ID INTEGER NOT NULL,
+        EVENT_TYPE VARCHAR(20) NOT NULL,
+        EVENT_TIME DATE);
+
+INSERT INTO T_SCENARIO_2
+        SELECT
+            s.ELEMENT_NUMBER AS EVENT_ID,
+            MOD(s.ELEMENT_NUMBER, 200) AS CUSTOMER_ID,
+            CASE
+                WHEN MOD(s.ELEMENT_NUMBER, 10) < 5 THEN 'LOGIN'
+                WHEN MOD(s.ELEMENT_NUMBER, 10) < 7 THEN 'PURCHASE'
+                WHEN MOD(s.ELEMENT_NUMBER, 10) < 8 THEN 'SUBSCRIBE'
+                WHEN MOD(s.ELEMENT_NUMBER, 10) = 8 THEN 'LOGOUT'
+                ELSE 'DELETE'
+            END AS EVENT_TYPE,
+            ADD_DAYS(DATE'2023-01-01', MOD(s.ELEMENT_NUMBER, 180)) AS EVENT_TIME
+        FROM SERIES_GENERATE_INTEGER(1, 1, 300) s;
+
+-- Simulate frequent access pattern
+DO
+BEGIN
+  DECLARE i INT = 0;
+  -- First pattern: 100 times
+  WHILE :i < 100 DO
+    EXECUTE IMMEDIATE '
+      SELECT * FROM T_SCENARIO_2
+      WHERE EVENT_ID > 9 OR EVENT_TYPE = ''LOGIN''
+    ';
+    i = :i + 1;
+  END WHILE;
+END;
+```
+
+**T_SCENARIO_3**
+```SQL
+SET SCHEMA PA_DEMO;
+
+ALTER SYSTEM ALTER TABLE PLACEMENT (SCHEMA_NAME=>'PA_DEMO', TABLE_NAME=>'T_SCENARIO_3')
+SET (MIN_ROWS_FOR_PARTITIONING=>100, REPARTITIONING_THRESHOLD=>10000, INITIAL_PARTITIONS=>3);
+
+CREATE COLUMN TABLE T_SCENARIO_3 (
+    EVENT_ID INTEGER NOT NULL,
+    EVENT_DATE DATE NOT NULL,
+    DESCRIPTION VARCHAR(50) NOT NULL
+);
+
+INSERT INTO T_SCENARIO_3
+SELECT
+    ELEMENT_NUMBER,
+    ADD_DAYS(DATE'2019-01-01', MOD(ELEMENT_NUMBER, 2190)), -- 6 years × 365 = 2190
+    'Event ' || ELEMENT_NUMBER
+FROM SERIES_GENERATE_INTEGER(1, 1, 3600);
+DO
+BEGIN
+  DECLARE i INT = 0;
+  WHILE :i < 100 DO
+    EXECUTE IMMEDIATE '
+      SELECT * FROM T_SCENARIO_3
+      WHERE EVENT_DATE > DATE''2023-01-01''
+    ';
+    i = :i + 1;
+  END WHILE;
+END;
+```
+
+Now you are ready with all the datasets. 
+Move on to the Exercise 2.1.
+
+
 ## Exercise 2.1 Generate partitioning recommendations with Partition Advisor
 
 After completing these steps you will have successfully generated five partitioning recommendations for your HANA Cloud instance in **Recommendation App**.
@@ -22,7 +102,8 @@ After completing these steps you will have successfully generated five partition
 1. **Open SAP BTP Cockpit** (Same with Exercise 1)
 - Navigate to [SAP BTP Cockpit](https://tdct3ched1.accounts.ondemand.com/oauth2/authorize?response_type=code&scope=openid+email+profile&redirect_uri=https%3A%2F%2Femea.cockpit.btp.cloud.sap%2Flogin%2Fcallback&client_id=306ee77d-68d9-4398-ac62-1d07872563f9&state=EPkcyY---sTacmmvjflnPQ&code_challenge=fqM4tO2wlVaQLhRKfiqhS_2sXqA5WHfsG4QxvAc4oq4&code_challenge_method=S256).
 - Login with your **_User Name_** and **_Password_**.
-
+    - User Name: **_da263_0xx@education.cloud.sap_** (xx: your index)
+    - Password: Provided in the PPT slide
 
 2. **Access HANA Cloud Central** (Same with Exercise 1)
 - Click **Instances and Subscriptions** in the leftmost navigation panel.
@@ -188,10 +269,11 @@ SELECT TABLE_NAME, PARTITION_DEFINITION FROM PARTITIONED_TABLES WHERE TABLE_NAME
 
 - Check the performance by running the following query on a specific range of order keys before applying the recommendation.
 ```SQL
+SET SCHEMA PA_DEMO;
 SELECT * FROM T_SCENARIO_4 WHERE O_ORDERKEY > 1000000 AND O_ORDERKEY < 1200000;
 ```
 
-- Check **Execution Elapsed Time**, **Execution CPU Time** and **Server Peak Memory** in the **History** tab.
+- Check **Execution Elapsed Time** and **Execution CPU Time** in the **History** tab.
 <br>![](/exercises/ex2/images/02_26_a.png)
 
 3. **Apply the recommendation**
@@ -206,11 +288,13 @@ SELECT * FROM T_SCENARIO_4 WHERE O_ORDERKEY > 1000000 AND O_ORDERKEY < 1200000;
 
 - Check the performance with the same SQL script and confirm the performance improvement compared to before applying the recommendation.
 ```SQL
+SET SCHEMA PA_DEMO;
 SELECT * FROM T_SCENARIO_4 WHERE O_ORDERKEY > 1000000 AND O_ORDERKEY < 1200000;
 ```
 
-- You can see that the **Execution Elapsed Time**, **Execution CPU Time** and **Server Peak Memory** has been reduced significantly.
+- You can see that the **Execution Elapsed Time** and **Execution CPU Time** have been reduced significantly.
 <br>![](/exercises/ex2/images/02_26_b.png)
+
 
 ### Scenario 5: Hash-hash partitioned table with some full partitions
 
@@ -255,7 +339,7 @@ You can go back to **Instance Overview** page.
 You've successfully generated partitioning recommendations for your selected schema(s) and table(s) and applied them easily with a simple click of **Apply** from the **Recommendation App**. 
 
 You can find an asset about Partition Advisor below.
-- [Help Documentation](https://help.sap.com/docs/hana-cloud-database/sap-hana-cloud-sap-hana-database-administration-guide/about-partition-advisor?locale=en-US)
+- [Partition Advisor Help Documentation](https://help.sap.com/docs/hana-cloud-database/sap-hana-cloud-sap-hana-database-administration-guide/about-partition-advisor?locale=en-US)
 
 
 Continue to - [Exercise 3 - Index Advisor](../ex3/README.md)

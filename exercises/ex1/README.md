@@ -18,6 +18,8 @@ After completing these steps you will have successfully generated an ECN recomme
 1. **Open SAP BTP Cockpit**
 - Navigate to [SAP BTP Cockpit](https://tdct3ched1.accounts.ondemand.com/oauth2/authorize?response_type=code&scope=openid+email+profile&redirect_uri=https%3A%2F%2Femea.cockpit.btp.cloud.sap%2Flogin%2Fcallback&client_id=306ee77d-68d9-4398-ac62-1d07872563f9&state=EPkcyY---sTacmmvjflnPQ&code_challenge=fqM4tO2wlVaQLhRKfiqhS_2sXqA5WHfsG4QxvAc4oq4&code_challenge_method=S256).
 - Login with your **_User Name_** and **_Password_**.
+    - User Name: **_da263_0xx@education.cloud.sap_** (xx: your index)
+    - Password: Provided in the PPT slide
 
 
 2. **Access HANA Cloud Central**
@@ -49,7 +51,7 @@ After completing these steps you will have successfully generated an ECN recomme
 <br>![](/exercises/ex1/images/01_03.png)  
 
 
-- Add **Thresholds** for Memory and Compute. The default value is 80%, but in this exercise, we will set it as **_70%_** for both **Memory** and **Compute**.
+- Add **Thresholds** for Memory and Compute. The default value is **80%**, and you can add the thresholds that are suitable for your use case. In this exercise, we will set it as **_70%_** for both **Memory** and **Compute**.
 <br>![](/exercises/ex1/images/01_04.png)
 <br> Now the ECN Advisor is **switched on**.  
 
@@ -59,7 +61,8 @@ After completing these steps you will have successfully generated an ECN recomme
 <br>![](/exercises/ex1/images/01_05.png)  
 
 
-- You can see a recommendation topic selected as **Elastic Compute Node**. Define the **Analysis Timeframe** that the advisor will analyze your resource usage to generate a recommendation. The time frame must be <u>*between 30 minutes and 24 hours*</u> in length. It must end <u>*at least 20 minutes before*</u> the recommendation request, and must be <u>*within the last 14 days*</u>. Once you have selected the timeframe, click **Generate Recommendation** at the bottom.
+- You can see a recommendation topic selected as **Elastic Compute Node**. Define the **Analysis Timeframe** that the advisor will analyze your resource usage to generate a recommendation. The time frame must be <u>*between 30 minutes and 24 hours*</u> in length. It must end <u>*at least 20 minutes before*</u> the recommendation request, and must be <u>*within the last 14 days*</u>. 
+In this exercise, you keep it as 1 day as it has been already selected by default. Click **Generate Recommendation** at the bottom.
 <br>![](/exercises/ex1/images/01_06.png)
 
 
@@ -103,23 +106,29 @@ You can provision and deprovision the ECN and route the workload class to the EC
 18.159.145.225
 3.122.189.245
 ```
+You need to add the IP address one by one by clicking **Add** button as you see in the screenshot below.
 <br>![](/exercises/ex1/images/00_ap00.png)
 
-- Save the configuration.
+- Choose **Apply changes without a restart** option for the sake of time and click **Save Changes**.
+
 
 2. **Open Automation Pilot from SAP BTP Cockpit**
 - Go back to [SAP BTP Cockpit](https://tdct3ched1.accounts.ondemand.com/oauth2/authorize?response_type=code&scope=openid+email+profile&redirect_uri=https%3A%2F%2Femea.cockpit.btp.cloud.sap%2Flogin%2Fcallback&client_id=306ee77d-68d9-4398-ac62-1d07872563f9&state=EPkcyY---sTacmmvjflnPQ&code_challenge=fqM4tO2wlVaQLhRKfiqhS_2sXqA5WHfsG4QxvAc4oq4&code_challenge_method=S256).
 - Click **Automation Pilot** from Application list.
 <br>![](/exercises/ex1/images/01_ap01.png)
 
+
 3.	**Import an ECN HANA Cloud Other Environment Catalog**
+
+With the Automation Pilot, you can run predefined commands or create custom commands. For ECN provisioning and deprovisioning in HANA Cloud Other Environment instance, we have published a catalog with predefined commands to make it easy to use. This catalog is not included in **Provided Catalogs** of the service, but you will import the prepared catalog through the following steps.
+
 - Go to **My Catalogs** and click **Import** button on the top right side.
 <br>![](/exercises/ex1/images/01_ap02.png)
 
-- Click [here](https://github.com/SAP-samples/automation-pilot-examples/blob/main/hana-ecn-other/ecncatalog_otherenv.json) and copy raw file.
+- Click [here](https://github.com/SAP-samples/automation-pilot-examples/blob/main/hana-ecn-other/ecncatalog_otherenv.json) and copy raw file. This repository contains a curated collection of example Automation Pilot commands and what you see now is for ECN scenario.
 <br>![](/exercises/ex1/images/01_ap03.png)
 
-- Paste the copied raw file into the bottom field and click import.
+- Paste the copied raw file into the bottom field and click import. This is a json file that includes all the necessary parameters for ECN provisioning and deprovisioning.
 <br>![](/exercises/ex1/images/01_ap04.png)
 
 - You can now see the imported ECN catalog in your catalog list.
@@ -172,9 +181,9 @@ You can provision and deprovision the ECN and route the workload class to the EC
 - Click **ProvisionHanaCloudElasticComputeNode** from the list of commands.
 <br>![](/exercises/ex1/images/01_ap24.png)
 
-- Select **EnableWorkloadClass** in the **Executors** and edit the name of the workload class which needs to be routed to the ECN.
+- Select **EnableWorkloadClass** in the **Executors** and edit the name of the workload class which needs to be routed to the ECN. <ins>You will find which statement to put in the field in the following steps.</ins> 
 <br>![](/exercises/ex1/images/01_ap25.png)
-To check the workload name again, go to **HANA Cloud Central** and under the **Elastic Compute Node** page, you can find **Manage Workload Classes** button. When you click it, you will see the list of **Workload Classes**.
+To check the workload name, go to **HANA Cloud Central** and under the **Elastic Compute Node** page, you can find **Manage Workload Classes** button. When you click it, you will see the list of **Workload Classes**.
 <br>![](/exercises/ex1/images/01_ap26.png)
 <br>![](/exercises/ex1/images/01_ap27.png)
 Come back to **Automation Pilot** and edit the statement to route the selected workload class to a new ECN that will be provisioned.
@@ -210,13 +219,12 @@ Add **cpu**, **memory**, **storage** as recommended, and add a **nodeName**. Mak
 - Open the SQL Console.
 <br>![](/exercises/ex1/images/01_15.png)
 
-
 - Connect to **ECN User** by running the following script.
 ```SQL
 CONNECT ECNUSER PASSWORD Ecnadvisor1;
 ```
 
-- Run the following script to call the pre-defined procedure (CALL_SPIKE) for the workload. It would take 4-5 minutes for this statement to run.
+- Run the following script to call the pre-defined procedure **CALL_SPIKE()** for the workload. It would take 4-5 minutes for this statement to run.
 ```SQL
 CALL CALL_SPIKE();
 ```
@@ -230,14 +238,14 @@ CALL CALL_SPIKE();
 - Choose **DeprovisionHanaCloudElasticComputeNode** from the **Commands** list.
 <br>![](/exercises/ex1/images/01_ap37.png)
 
-- Edit *statement** parameter to update the workload class name from **DisableWorkloadClass** Executor. This executor will disable the workload class.
+- Edit **statement** parameter to update the workload class name from **DisableWorkloadClass** Executor. This executor will disable the workload class.
 <br>![](/exercises/ex1/images/01_ap38.png)
 <br>![](/exercises/ex1/images/01_ap39.png)
 
 - Trigger the command. Select **HanaCloudOtherEnvironments** for **Inputs** and add the ECN name, <u>**ecn1**</u> in the **nodeName** field. And click **Trigger**.
 <br>![](/exercises/ex1/images/01_ap40.png)
 
-- The **Automation Pilot** is disenabling the workload class and deprovisioning the ECN.
+- The **Automation Pilot** is disabling the workload class and deprovisioning the ECN.
 <br>![](/exercises/ex1/images/01_ap41.png)
 
 - You can check the the execution is in progress from **HANA Cloud Central** as well.
@@ -276,7 +284,7 @@ You can go back to **Instance Overview** page.
 
 You've learned how to configure ECN Advisor to generate recommendations for your workload, and how to provision and deprovision ECNs more simply and automatically with Automation Pilot.
 
-You can find more assets about ECN and ECN Advisor below. Before moving on to the next exercise, please read the blog to better understand the real life scenario for the ECN.
+You can find more assets about ECN and ECN Advisor below.
 - Blog: [Harnessing Dynamic Elasticity (Elastic Compute Node) for Smarter Scaling in SAP HANA Cloud](https://community.sap.com/t5/technology-blog-posts-by-sap/harnessing-dynamic-elasticity-elastic-compute-node-for-smarter-scaling-in/ba-p/14016836)
 - Tutorial: [Use an Elastic Compute Node (ECN) for Scheduled Workloads](https://developers.sap.com/tutorials/hana-cloud-ecn..html#dab4c6d2-91f5-4b55-be9f-16a0ee7a50e2)
 
