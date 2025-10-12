@@ -1,8 +1,14 @@
 # Exercise 3 - Index Advisor
 
+In this exercise, you will create a dataset and generate index recommendations using **Recommendation App** in **HANA Cloud Central**. You will then manually apply these recommendations through the **SQL Console** in **HANA Cloud Central** and validate their performance benefits. 
+
+## What is Index Advisor?
+
 **Index Advisor** is a rule-based advisor that recommends creating or dropping indexes based on statistics such as scan counts and index lookup counts. It also considers additional metadata to identify the most suitable candidates for index recommendations.
 
 The current version of the advisor supports queries involving <ins>single tables only</ins>. Future enhancements will extend its capabilities to handle more complex queries and additional features.
+
+## Dataset Information and Preparation
 
 For this hands-on exercise, two sample tables will be created and used. These are **artifically designed** to serve as candidates for index recommendations.
 

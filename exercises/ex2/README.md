@@ -1,12 +1,14 @@
 # Exercise 2 - Partition Advisor
 
-**Partition Advisor** generates intelligent recommendations for partitioning tables based on their size, usage patterns and data distribution.
+In this exercise, you will generate partitioning recommendations for a specific schema and apply them using **Recommendation App** in **HANA Cloud Central**. You will then verify that all recommendations have been applied correctly.
 
-In this exercise, we will use this **Partition Advisor** to generate partitioning recommendations and apply them easily within **Recommendation App** from **HANA Cloud Central**.
+## What is Partition Advisor?
 
-For this hands-on exercise, **five exemplifying scenarios** have been designed.
+**Partition Advisor** provides intelligent recommendations for partitioning tables based on factors such as table size, usage patterns and data distribution. It also offers an **apply function** that allows users to easily implement the recommended partitions.
 
-You can find the table information for these five scenarios below.
+## Dataset Information and Preparation
+
+For this hands-on exercise, **five exemplifying scenarios** have been designed. You can find the table information for these five scenarios below.
 - **T_SCENARIO_1**: Full unpartitioned table with primary key
 - **T_SCENARIO_2**: Unpartitioned table with high data usage and complex query patterns
 - **T_SCENARIO_3**: Unpartitioned time-based table with high access patterns
@@ -17,7 +19,8 @@ The minimum rows for repartitioning, repartitioning threshold, and initial parti
 
 **T_SCENARIO_1**, **T_SCENARIO_4**, and **T_SCENARIO_5** have been already set up in your instance. You need to create the other two tables, **T_SCENARIO_2** and **T_SCENARIO_3** before starting the Exercise 2.1. Please copy the following scripts and run each of them in the SQL Console as instructed at the beginning of the workshop. You will learn more about each table in the Exercise 2.2.
 
-**T_SCENARIO_2**
+- **T_SCENARIO_2**
+
 ```SQL
 SET SCHEMA PA_DEMO;
 
@@ -59,7 +62,8 @@ BEGIN
 END;
 ```
 
-**T_SCENARIO_3**
+- **T_SCENARIO_3**
+
 ```SQL
 SET SCHEMA PA_DEMO;
 
