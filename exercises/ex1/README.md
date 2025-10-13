@@ -148,7 +148,7 @@ With the **Automation Pilot**, you can run predefined commands or create custom 
 - For the first key, you need to add **connectionUrl**. Access **HANA Cloud Central** to **Copy SQL Endpoint** of your instance.
 <br>![](/exercises/ex1/images/01_ap06.png)
 
-- Add the copied SQL Endpoint in the value after <u>jdbc:sap://</u> and save it.
+- Add the copied SQL Endpoint in the value after <ins>**jdbc:sap://**</ins> and save it.
 <br>![](/exercises/ex1/images/01_ap09.png)
 
 - Update **dbPassword** to your instance password.
