@@ -4,9 +4,14 @@ In this exercise, you will create a dataset and generate index recommendations u
 
 ## What is Index Advisor?
 
-**Index Advisor** is a rule-based advisor that recommends creating or dropping indexes based on statistics such as scan counts and index lookup counts. It also considers additional metadata to identify the most suitable candidates for index recommendations.
+An index is a supplemental data structure that supports query processing. While it requires additional memory, an index can dramatically improve query performance when used correctly. As a result, indexes are considered one of the most critical factors in physical database design.
 
-The current version of the advisor supports queries involving <ins>single tables only</ins>. Future enhancements will extend its capabilities to handle more complex queries and additional features.
+The current **Index Advisor** operates on two primary rules:
+- Recommends creating an index on a column with a very high scan count
+- Recommends dropping an index with a lookup count near zero
+
+It also considers additional metadata to identify the most suitable candidates for index recommendations.
+This initial release does not recommend creating indexes on columns used in join conditions, but future enhancements will extend its capabilities to handle more complex queries and additional features.
 
 ## Dataset Information and Preparation
 
@@ -148,13 +153,13 @@ Once you see it's successfully executed, you are ready to start Exercise 3.1.
 
 After completing these steps you will have successfully generated four index recommendations for your HANA Cloud instance with Index Advisor in **Recommendation App**.
 
-1. **Open SAP BTP Cockpit** (Same with Exercise 1)
-- Navigate to [SAP BTP Cockpit](https://tdct3ched1.accounts.ondemand.com/oauth2/authorize?response_type=code&scope=openid+email+profile&redirect_uri=https%3A%2F%2Femea.cockpit.btp.cloud.sap%2Flogin%2Fcallback&client_id=306ee77d-68d9-4398-ac62-1d07872563f9&state=EPkcyY---sTacmmvjflnPQ&code_challenge=fqM4tO2wlVaQLhRKfiqhS_2sXqA5WHfsG4QxvAc4oq4&code_challenge_method=S256).
+1. **Open SAP BTP Cockpit** (Skip this step if you already have it opened.)
+- Navigate to [SAP BTP Cockpit](https://emea.cockpit.btp.cloud.sap/cockpit?idp=tdct3ched1.accounts.ondemand.com#/globalaccount/4c772782-0751-42ee-93c3-897452fdcb63/subaccount/27eb38bc-fdf9-4055-9a8d-6d30ea5f2b8f/service-instances).
 - Login with your **_User Name_** and **_Password_**.
     - User Name: **_da263_0xx@education.cloud.sap_** (xx: your index)
     - Password: Provided in the PPT slide
 
-2. **Access HANA Cloud Central** (Same with Exercise 1)
+2. **Access HANA Cloud Central** (Skip this step if you already have it opened.)
 - Click **Instances and Subscriptions** in the leftmost navigation panel.
 - Click **SAP HANA Cloud** in the Application list to open HANA Cloud Central.
 <br>![](/exercises/ex1/images/01_00.png)
@@ -280,7 +285,7 @@ You can find an asset about Index Advisor below.
 
 You've now completed all the hands-on exercise for **DA263: SAP HANA Cloud Advisor and Automation**.
 
-Thank you for your participation.
+Thank you very much for your participation.
 
 
 

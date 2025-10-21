@@ -4,7 +4,13 @@ In this exercise, you will generate partitioning recommendations for a specific 
 
 ## What is Partition Advisor?
 
-**Partition Advisor** provides intelligent recommendations for partitioning tables based on factors such as table size, usage patterns and data distribution. It also offers an **apply function** that allows users to easily implement the recommended partitions.
+Partitioning divides a table so that each partition stores a distinct subset of rows. Beyond overcoming the 2-billion-record limit per partition, well-designed partitions enable several performance benefits: load balancing across hosts, parallel query execution, partition pruning (both static and dynamic) to skip irrelevant data scans, faster and more targeted delta merges, and improved compression ratios.
+
+However, excessive fragmentation into small partitions introduces overhead. To address this, the **Partition Advisor** analyzes table sizes, data distribution patterns, and workload characteristics to identify tables or partitions exceeding configurable row-count thresholds. It then recommends optimized partitioning specifications that maximize performance while minimizing maintenance costs and ensuring each partition remains within size limits. The partitioning decisions focus on the following points: 
+- choosing an effective partition key based on access patterns and cardinality
+- choosing the right partitioning method (HASH or RANGE, or multilevel partitioning)
+
+The Partition Advisor also offers an **apply function** that allows users to easily implement the partitioning recommendations.
 
 ## Dataset Information and Preparation
 
@@ -17,11 +23,14 @@ For this hands-on exercise, **five exemplifying scenarios** have been designed. 
 
 The minimum rows for repartitioning, repartitioning threshold, and initial partition values were set to artificially low levels to facilitate demonstration scenarios with minimal data and reduced workload. Refer to the [table placement rule](https://help.sap.com/docs/hana-cloud-database/sap-hana-cloud-sap-hana-database-administration-guide/table-placement-rules?locale=en-US) for detailed parameter guide.
 
-**T_SCENARIO_1**, **T_SCENARIO_4**, and **T_SCENARIO_5** have been already set up in your instance. You need to create the other two tables, **T_SCENARIO_2** and **T_SCENARIO_3** before starting the Exercise 2.1. Please copy the following scripts and run each of them in the **SQL Console** as instructed at the beginning of the workshop. You will learn more about each table in the Exercise 2.2.
+**T_SCENARIO_1**, **T_SCENARIO_4**, and **T_SCENARIO_5** have been already set up in your instance. You need to create the other two tables, **T_SCENARIO_2** and **T_SCENARIO_3** before starting the Exercise 2.1.
 
-- **T_SCENARIO_2**
+Please copy the following script and run it in the **SQL Console** in HANA Cloud Central as instructed at the beginning of the workshop. You will learn more about each table in the Exercise 2.2.
 
+**SQL Script**
 ```SQL
+-- T_SCENARIO_2 script
+CONNECT DBADMIN PASSWORD Welcome1;
 SET SCHEMA PA_DEMO;
 
 ALTER SYSTEM ALTER TABLE PLACEMENT (SCHEMA_NAME=>'PA_DEMO', TABLE_NAME=>'T_SCENARIO_2')
@@ -47,11 +56,9 @@ INSERT INTO T_SCENARIO_2
             ADD_DAYS(DATE'2023-01-01', MOD(s.ELEMENT_NUMBER, 180)) AS EVENT_TIME
         FROM SERIES_GENERATE_INTEGER(1, 1, 300) s;
 
--- Simulate frequent access pattern
 DO
 BEGIN
   DECLARE i INT = 0;
-  -- First pattern: 100 times
   WHILE :i < 100 DO
     EXECUTE IMMEDIATE '
       SELECT * FROM T_SCENARIO_2
@@ -60,13 +67,8 @@ BEGIN
     i = :i + 1;
   END WHILE;
 END;
-```
 
-- **T_SCENARIO_3**
-
-```SQL
-SET SCHEMA PA_DEMO;
-
+-- T_SCENARIO_3 script
 ALTER SYSTEM ALTER TABLE PLACEMENT (SCHEMA_NAME=>'PA_DEMO', TABLE_NAME=>'T_SCENARIO_3')
 SET (MIN_ROWS_FOR_PARTITIONING=>100, REPARTITIONING_THRESHOLD=>10000, INITIAL_PARTITIONS=>3);
 
@@ -79,7 +81,7 @@ CREATE COLUMN TABLE T_SCENARIO_3 (
 INSERT INTO T_SCENARIO_3
 SELECT
     ELEMENT_NUMBER,
-    ADD_DAYS(DATE'2019-01-01', MOD(ELEMENT_NUMBER, 2190)), -- 6 years × 365 = 2190
+    ADD_DAYS(DATE'2019-01-01', MOD(ELEMENT_NUMBER, 2190)),
     'Event ' || ELEMENT_NUMBER
 FROM SERIES_GENERATE_INTEGER(1, 1, 3600);
 DO
@@ -103,13 +105,13 @@ Move on to the Exercise 2.1.
 
 After completing these steps you will have successfully generated five partitioning recommendations for your HANA Cloud instance in **Recommendation App**.
 
-1. **Open SAP BTP Cockpit** (Same with Exercise 1)
-- Navigate to [SAP BTP Cockpit](https://tdct3ched1.accounts.ondemand.com/oauth2/authorize?response_type=code&scope=openid+email+profile&redirect_uri=https%3A%2F%2Femea.cockpit.btp.cloud.sap%2Flogin%2Fcallback&client_id=306ee77d-68d9-4398-ac62-1d07872563f9&state=EPkcyY---sTacmmvjflnPQ&code_challenge=fqM4tO2wlVaQLhRKfiqhS_2sXqA5WHfsG4QxvAc4oq4&code_challenge_method=S256).
+1. **Open SAP BTP Cockpit** (Skip this step if you already have it opened.)
+- Navigate to [SAP BTP Cockpit](https://emea.cockpit.btp.cloud.sap/cockpit?idp=tdct3ched1.accounts.ondemand.com#/globalaccount/4c772782-0751-42ee-93c3-897452fdcb63/subaccount/27eb38bc-fdf9-4055-9a8d-6d30ea5f2b8f/service-instances).
 - Login with your **_User Name_** and **_Password_**.
     - User Name: **_da263_0xx@education.cloud.sap_** (xx: your index)
     - Password: Provided in the PPT slide
 
-2. **Access HANA Cloud Central** (Same with Exercise 1)
+2. **Access HANA Cloud Central** (Skip this step if you already have it opened.)
 - Click **Instances and Subscriptions** in the leftmost navigation panel.
 - Click **SAP HANA Cloud** in the Application list to open HANA Cloud Central.
 <br>![](/exercises/ex1/images/01_00.png)
@@ -213,6 +215,8 @@ The advisor identifies the 'EVENT_TYPE' column as the most frequently queried co
 
 2. **Check current partitioning status** 
 - Verify the current partitioning state using the same approach as Scenario 1.
+
+- Make sure to be connected with DBADMIN.
 
 - Run the following SQL script to check that the table is unpartitioned.
 ```SQL

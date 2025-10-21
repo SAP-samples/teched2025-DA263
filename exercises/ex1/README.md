@@ -2,24 +2,30 @@
 
 In this exercise, we will configure **Elastic Compute Node Advisor (ECN Advisor)** and generate an ECN recommendation for a specific timeframe in **Recommendation App** from **HANA Cloud Central**. In addition, we will use **SAP Automation Pilot** to simplify and automate the provisioning and deprovisioning processes for ECNs.
 
-## What is Elastic Compute Node (ECN)?
+## What are Elastic Compute Node (ECN) and ECN Advisor?
 
-An ECN is an instance type running an additional computeserver process (like an indexserver) which has only a temporary persistence and which can be easily added and dropped when required depending on the current workload state. It is useful to handle the known peak loads without upsizing your coordinator node permanently. You can find more information about the ECN in [this guide](https://help.sap.com/docs/hana-cloud-database/sap-hana-cloud-sap-hana-database-administration-guide/sap-hana-cloud-elastic-compute-node?locale=en-US).
+An **Elastic Compute Node (ECN)** is a read-only compute node where the compute-intensive workloads can be distributed. It's basically equivalent to the indexserver but no persistency to store data permanently, and can be easily added and dropped when required depending on the current workload state. It is most suitable for compute-intensive OLAP or read-only peak workloads. It can effectively and flexibly handle upcoming workload peaks while keeping your coordinator (indexserver) unchanged. For example, an Intelligent Data Application running on SAP HANA Cloud can leverage ECNs to effectively address compute-intentive workload peaks, such as quarter-end jobs. You can find more information about the ECN in [this guide](https://help.sap.com/docs/hana-cloud-database/sap-hana-cloud-sap-hana-database-administration-guide/sap-hana-cloud-elastic-compute-node?locale=en-US).
 
+The **ECN Advisor** helps you identify workloads that drive peak CPU or memory within a specified time window and recommend when to provision and deprovision ECNs. The selection criteria are as below:
+- Significant CPU or memory consumption
+- Predictable patterns (daily, weekly, or monthly)
+- Read-only (no DML, no updatable SQLScript)
+
+The ECN Advisor will be continuously enhanced with more advanced automation and usability features.
 
 ## What is SAP Automation Pilot?
 
-SAP Automation Pilot is a cloud-based automation service within the SAP Business Technology Platform (BTP) DevOps portfolio. As a low-code/no-code engine, it is designed to simplify and automate complex manual processes and tasks, enhancing efficiency and reducing operational overhead by designing and running Ops automation flows. You can find further information about Automation Pilot [here](https://help.sap.com/docs/automation-pilot/automation-pilot/what-is-sap-automation-pilot?locale=en-US), and please be noted that this service is <u>**not yet**</u> available in all regions.
+**SAP Automation Pilot** is a cloud-based automation service within the SAP Business Technology Platform (BTP) DevOps portfolio. As a low-code/no-code engine, it is designed to simplify and automate complex manual processes and tasks, enhancing efficiency and reducing operational overhead by designing and running Ops automation flows. You can find further information about Automation Pilot [here](https://help.sap.com/docs/automation-pilot/automation-pilot/what-is-sap-automation-pilot?locale=en-US), and please be noted that this service is <ins>**not yet**</ins> available in all regions.
 
 ## Exercise 1.1 Configure ECN Advisor and generate an ECN recommendation
 
 After completing these steps you will have successfully generated an ECN recommendation for your HANA Cloud instance from HANA Cloud Central.
 
 1. **Open SAP BTP Cockpit**
-- Navigate to [SAP BTP Cockpit](https://tdct3ched1.accounts.ondemand.com/oauth2/authorize?response_type=code&scope=openid+email+profile&redirect_uri=https%3A%2F%2Femea.cockpit.btp.cloud.sap%2Flogin%2Fcallback&client_id=306ee77d-68d9-4398-ac62-1d07872563f9&state=EPkcyY---sTacmmvjflnPQ&code_challenge=fqM4tO2wlVaQLhRKfiqhS_2sXqA5WHfsG4QxvAc4oq4&code_challenge_method=S256).
+- Navigate to [SAP BTP Cockpit](https://emea.cockpit.btp.cloud.sap/cockpit?idp=tdct3ched1.accounts.ondemand.com#/globalaccount/4c772782-0751-42ee-93c3-897452fdcb63/subaccount/27eb38bc-fdf9-4055-9a8d-6d30ea5f2b8f/service-instances).
 - Login with your **_User Name_** and **_Password_**.
-    - User Name: **_da263_0xx@education.cloud.sap_** (xx: your index)
-    - Password: Provided in the PPT slide
+    - User Name: **_da263-0xx@education.cloud.sap_** (xx: your index)
+    - Password: **_Provided in the PPT slide_**
 
 
 2. **Access HANA Cloud Central**
@@ -75,7 +81,7 @@ In this exercise, you keep it as 1 day as it has been already selected by defaul
 
 
 6. **Review Recommendation Details** 
-- There is a **Recommended Configuration** and an **Explanation** field. In the **Recommended Configuration**, you can see the recommended schedule and configuration for the ECN as well as expected capacity units that will be consumed with the ECN. You can click **Workload Class** to see which workload class is recommended to be routed to the ECN.
+- Click the available recommendation in the list. There is a **Recommended Configuration** and an **Explanation** field. In the **Recommended Configuration**, you can see the recommended schedule and configuration for the ECN as well as expected capacity units that will be consumed with the ECN. You can click **Workload Class** to see which workload class is recommended to be routed to the ECN.
 <br>![](/exercises/ex1/images/01_09.png)
 <br>![](/exercises/ex1/images/01_10.png)
 
@@ -84,7 +90,7 @@ In this exercise, you keep it as 1 day as it has been already selected by defaul
 <br>![](/exercises/ex1/images/01_11.png)
 
 
-- (Optional) On the top right side of the recommendation, there is a **Provide Feedback** button to share your feedback on this recommendation. Your feedback is always appreciated and helpful to improve our advisor.
+- (Optional) On the top right side of the recommendation, there is a **Provide Feedback** button to share your feedback on this recommendation. You can provide your evaluation on if and how this specific recommendation was helpful for you. This information will be kept confidential and used only for analysis by SAP internal teams to improve the advisors.
 <br>![](/exercises/ex1/images/01_12_fb.png)
 
 <br>Now you have successfully generated the ECN recommendation. You can move on to the next step to provision and deprovision an ECN as recommended by the advisor.
@@ -95,26 +101,31 @@ In this exercise, you keep it as 1 day as it has been already selected by defaul
 You can provision and deprovision the ECN and route the workload class to the ECN within HANA Cloud Central. However, to make this process more easily repeatable, in this practice, you will learn how to make use of **SAP Automation Pilot**.
 
 1. **Configure the HANA Cloud instance to allow connections for Automation Pilot**
-- In the Instance page at HANA Cloud Central, click **Manage Configuration** from the **Actions** drop-down list.
+- In the Instance Overview page at HANA Cloud Central, click **Manage Configuration** on top.
 
 - Go to **Connections**, choose **Allow specific IP addresses and IP ranges** option and then add the following 6 IP addresses.
 ```
-18.192.167.80
-18.158.182.81
-18.192.94.153
-18.159.0.107
-18.159.145.225
+18.192.167.80,
+18.158.182.81,
+18.192.94.153,
+18.159.0.107,
+18.159.145.225,
 3.122.189.245
 ```
-You need to add the IP address one by one by clicking **Add** button as you see in the screenshot below.
+You can click need to add the IP address in the table view one by one by clicking **Add** button as you see in the screenshot below.
 <br>![](/exercises/ex1/images/00_ap00.png)
+
+Or, in a simpler way, you can switch to the syntax view and copy and paste the 6 IP addresses like below.
+<br>![](/exercises/ex1/images/00_ap01.png)
+
+- Click **Review and Save**.
 
 - Choose **Apply changes without a restart** option for the sake of time and click **Save Changes**.
 
 
 2. **Open Automation Pilot from SAP BTP Cockpit**
-- Go back to [SAP BTP Cockpit](https://tdct3ched1.accounts.ondemand.com/oauth2/authorize?response_type=code&scope=openid+email+profile&redirect_uri=https%3A%2F%2Femea.cockpit.btp.cloud.sap%2Flogin%2Fcallback&client_id=306ee77d-68d9-4398-ac62-1d07872563f9&state=EPkcyY---sTacmmvjflnPQ&code_challenge=fqM4tO2wlVaQLhRKfiqhS_2sXqA5WHfsG4QxvAc4oq4&code_challenge_method=S256).
-- Click **Automation Pilot** from Application list.
+- Go back to SAP BTP Cockpit.
+- Click **Automation Pilot** from Application list from **Subscriptions**.
 <br>![](/exercises/ex1/images/01_ap01.png)
 
 
@@ -154,6 +165,7 @@ With the **Automation Pilot**, you can run predefined commands or create custom 
 - Update **dbPassword** to your instance password.
 <br>![](/exercises/ex1/images/01_ap10.png)
 <br>![](/exercises/ex1/images/01_ap11.png)
+Your DB Password: **_Welcome1_**
 
 - Update **instanceID** to your instance ID. You can copy it from **HANA Cloud Central** again.
 <br>![](/exercises/ex1/images/01_ap12.png)
@@ -169,29 +181,32 @@ With the **Automation Pilot**, you can run predefined commands or create custom 
 - Now you go back to **Inputs** list and click **HanaCloudServiceKey**.
 <br>![](/exercises/ex1/images/01_ap20.png)
 
-- Update **serviceKey** again by copying and pasting JSON from **BTP Cockpit**.
+- Update **serviceKey** <ins>again</ins> by copying and pasting JSON from **BTP Cockpit**.
 <br>![](/exercises/ex1/images/01_ap21.png)
 <br>![](/exercises/ex1/images/01_ap22.png)
 
 
 5. **Provision ECN with Commands**
-- Click **Commands** from the catalog.
+- Click **Commands** from the imported ECN HANA Cloud Other Environment catalog.
 <br>![](/exercises/ex1/images/01_ap23.png)
 
 - Click **ProvisionHanaCloudElasticComputeNode** from the list of commands.
 <br>![](/exercises/ex1/images/01_ap24.png)
 
-- Select **EnableWorkloadClass** in the **Executors** and edit the name of the workload class which needs to be routed to the ECN. <ins>You will find which statement to put in the field in the following steps.</ins> 
+- Scroll down and select **EnableWorkloadClass** in the **Executors** and edit the statement and the name of the workload class which needs to be routed to the ECN. <ins>You will find which statement to put in the field in the following steps.</ins> 
 <br>![](/exercises/ex1/images/01_ap25.png)
+
 To check the workload name, go to **HANA Cloud Central** and under the **Elastic Compute Node** page, you can find **Manage Workload Classes** button. When you click it, you will see the list of **Workload Classes**.
 <br>![](/exercises/ex1/images/01_ap26.png)
 <br>![](/exercises/ex1/images/01_ap27.png)
-Come back to **Automation Pilot** and edit the statement to route the selected workload class to a new ECN that will be provisioned.
-<br>![](/exercises/ex1/images/01_ap28.png)
-You can also copy and paste the following statement.
+
+Come back to **Automation Pilot** and edit the statement to route the selected workload class to a new ECN that will be provisioned by setting the routing location hint.
+You can copy and paste the following statement.
 ```sql
 ALTER WORKLOAD CLASS "WLC1" SET 'ROUTING LOCATION HINT'='ecn1';
 ```
+<br>![](/exercises/ex1/images/01_ap28.png)
+
 
 - And now you are ready to **Trigger** the command. Click **Trigger** on the top right side.
 <br>![](/exercises/ex1/images/01_ap29.png)
@@ -204,13 +219,13 @@ Add **cpu**, **memory**, **storage** as recommended, and add a **nodeName**. Mak
 <br>![](/exercises/ex1/images/01_ap31.png)
 <br>![](/exercises/ex1/images/01_ap32.png)
 
-- Now the command is being executed and you can check the progress.
+- Now the command is being executed and you can check the progress. It will take around 3-4 minutes.
 <br>![](/exercises/ex1/images/01_ap33.png)
 
 - You will see **Finished** status when it's completed. It means the ECN is successfully provisioned and the selected workload class is set to be routed to the provisioned ECN.
 <br>![](/exercises/ex1/images/01_ap34.png)
 
-- To check, you can go to **HANA Cloud Central** and in **Elastic Compute Node** page, you see the <u>**ecn1**</u> created in the **Current Running ECNs** list. You can also click **1 workload classes** and see now the **WLC1** has a routing location set as **ecn1**.
+- To check, you can go to **HANA Cloud Central** and in **Elastic Compute Node** page, hit the refresh button and then you see the <u>**ecn1**</u> created in the **Current Running ECNs** list. You can also click **1 workload classes** and see now the **WLC1** has a routing location set as **ecn1**.
 <br>![](/exercises/ex1/images/01_ap35.png)
 <br>![](/exercises/ex1/images/01_ap36.png)
 
