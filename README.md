@@ -1,3 +1,5 @@
+[![REUSE status](https://api.reuse.software/badge/github.com/SAP-samples/teched2025-DA263)](https://api.reuse.software/info/github.com/SAP-samples/teched2025-DA263)
+
 # DA263 - SAP HANA Cloud: Advisors and automation
 
 ## Description
